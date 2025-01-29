@@ -5,15 +5,10 @@ import styles from './GalleriesGrid.module.css';
 
 const GalleriesGrid = ({ galleriesElements }) => {
     const [hoveredGallery, setHoveredGallery] = useState(null);
-    const [mounted, setMounted] = useState(false);
     const ulRef = useRef(null);
     const liRefs = useRef([]);
     const pictureRefs = useRef([]);
     const imgRefs = useRef([]);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const galleryItems = useMemo(() => {
         if (galleriesElements.length >= 15) return galleriesElements;
@@ -36,8 +31,6 @@ const GalleriesGrid = ({ galleriesElements }) => {
     }, [galleriesElements]);
 
     useEffect(() => {
-        if (!mounted) return;
-
         const ulElement = ulRef.current;
         let viewportWidth = window.innerWidth;
         let viewportHeight = window.innerHeight;
@@ -175,11 +168,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
             ulElement.removeEventListener('mousemove', throttledHandleMouseMove);
             window.removeEventListener("resize", updateDimensions);
         };
-    }, [galleryItems, mounted]);
-
-    if (!mounted) {
-        return null;
-    }
+    }, [galleryItems]);
 
     return (
         <>

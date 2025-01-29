@@ -19,6 +19,24 @@ export default async function Page() {
             url: node.galleries?.image?.node?.sourceUrl || ''
         }));
 
+        if (galleriesElements.length < 15) {
+            const items = [...galleriesElements];
+            while (items.length < 15) {
+                const randomIndex = Math.floor(Math.random() * galleriesElements.length);
+                const originalGallery = galleriesElements[randomIndex];
+
+                items.push({
+                    ...originalGallery,
+                    id: `${originalGallery.id}-duplicate-${items.length}`,
+                    place: `${originalGallery.place} (${Math.floor(items.length / galleriesElements.length) + 1})`,
+                    date: originalGallery.date,
+                    url: originalGallery.url,
+                    alt: originalGallery.alt
+                });
+            }
+            galleriesElements = items;
+        }
+
     } catch (error) {
         console.error('Erreur lors de la récupération des galeries:', error);
     }
