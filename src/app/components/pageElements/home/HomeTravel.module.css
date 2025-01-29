@@ -1,0 +1,64 @@
+.image_list {
+    margin: 0;
+    height: 22rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+    list-style: none;
+    pointer-events: none;
+}
+
+.image_item {
+    position: absolute;
+    opacity: 1;
+}
+
+.picture {
+    height: 27vw;
+    width: 21vw;
+    display: block;
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .picture {
+        height: 45vw;
+        width: 33vw;
+    }
+}
+
+@media (max-width: 550px) {
+    .picture {
+        height: 75vw;
+        width: 60vw;
+    }
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.image_bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transform: translate3d(0px, -10%, 0px);
+    will-change: transform;
+}
+
+.image_section{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 190vh;
+    overflow: hidden;
+    margin: 0;
+    background: black;
+}

@@ -1,0 +1,21 @@
+.text {
+    font-family: var(--text-font-cashdisplay);
+    color: var(--paragraph);
+  }
+  
+  .text.colored {
+    color: var(--main-color);
+  }
+  
+  .text.contrasted {
+    color: var(--color-title);
+  }
+  
+  .text.white {
+    color: #fff;
+  }
+  
+  .text.default {
+    color: var(--paragraph);
+  }
+  

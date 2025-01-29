@@ -1,0 +1,5 @@
+.linkButton {
+    width: fit-content;
+    pointer-events: fill;
+    color: inherit;
+}

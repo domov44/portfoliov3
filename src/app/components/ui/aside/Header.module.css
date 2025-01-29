@@ -1,0 +1,54 @@
+.header {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 4;
+    padding: 40px;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.asideButton {
+    position: relative;
+    line-height: 1;
+    pointer-events: fill;
+    z-index: 2;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-title);
+    font-family: var(--text-font-cashdisplay);
+    overflow: hidden;
+    height: 30px;
+    width: 80px;
+    padding: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.buttonHidden {
+    opacity: 0;
+}
+
+.buttonTextWrapper {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: fill;
+}
+
+.buttonText {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    pointer-events: fill;
+    text-align: center;
+    will-change: transform;
+    visibility: hidden;
+}

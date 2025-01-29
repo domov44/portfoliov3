@@ -1,0 +1,13 @@
+.footer {
+    padding: 100px 30px;
+    max-width: calc(100% - 30px);
+    border-radius: 10px;
+    margin: 0 auto;
+    background: var(--secondary-bg-color);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 100px;
+}

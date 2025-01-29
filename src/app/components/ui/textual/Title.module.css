@@ -1,0 +1,7 @@
+/* Default styles for Title */
+.title {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: var(--text-font-cashdisplay);
+  }

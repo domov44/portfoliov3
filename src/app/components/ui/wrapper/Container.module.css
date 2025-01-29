@@ -1,0 +1,69 @@
+/* Container.module.css */
+.container {
+    gap: 30px;
+    display: flex;
+  }
+  
+  /* Direction */
+  .directionRow {
+    flex-direction: row;
+  }
+  
+  .directionColumn {
+    flex-direction: column;
+  }
+  
+  /* Alignment */
+  .alignCenter {
+    align-items: center;
+  }
+  
+  /* Justify Content */
+  .justify_start {
+    justify-content: start;
+  }
+  
+  .justify_center {
+    justify-content: center;
+  }
+  
+  .justify_space-between {
+    justify-content: space-between;
+  }
+  
+  /* Widths prédéfinies */
+  .width_full {
+    width: 100%;
+  }
+  
+  .width_half {
+    width: 50%;
+  }
+  
+  .width_auto {
+    width: auto;
+  }
+  
+  /* Max-widths prédéfinies */
+  .maxWidth_sm {
+    max-width: 640px;
+  }
+  
+  .maxWidth_md {
+    max-width: 768px;
+  }
+  
+  .maxWidth_lg {
+    max-width: 1024px;
+  }
+  
+  .maxWidth_xl {
+    max-width: 65vw;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1000px) {
+    .responsive {
+      flex-direction: column;
+    }
+  }

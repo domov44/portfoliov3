@@ -1,0 +1,13 @@
+.mega_menu_item {
+    color: var(--main-color);
+    position: relative;
+    width: fit-content;
+    text-transform: uppercase;
+    font-size: 6vw;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.mega_menu_item:hover {
+    color: var(--color-title);
+}

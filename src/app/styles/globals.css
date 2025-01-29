@@ -1,0 +1,173 @@
+:root {
+  --step--3: clamp(0.6935rem, 0.6652rem + 0.137vw, 0.768rem);
+  --step--2: clamp(0.8148rem, 0.7598rem + 0.2669vw, 0.96rem);
+  --step--1: clamp(0.9574rem, 0.8654rem + 0.4461vw, 1.2rem);
+  --step-0: clamp(1.125rem, 0.9828rem + 0.6897vw, 1.5rem);
+  --step-1: clamp(1.3219rem, 1.1121rem + 1.0172vw, 1.875rem);
+  --step-2: clamp(1.5532rem, 1.2533rem + 1.4539vw, 2.3438rem);
+  --step-3: clamp(1.825rem, 1.406rem + 2.0316vw, 2.9297rem);
+  --step-4: clamp(2.1444rem, 1.5687rem + 2.7912vw, 3.6621rem);
+  --step-5: clamp(2.5197rem, 1.739rem + 3.7848vw, 4.5776rem);
+  --step-6: clamp(2.9606rem, 1.9132rem + 5.0785vw, 5.722rem);
+  --step-7: clamp(3.4787rem, 2.0852rem + 6.7565vw, 7.1526rem);
+  --step-8: clamp(4.0875rem, 2.2466rem + 8.9255vw, 8.9407rem);
+  --step-9: clamp(4.8028rem, 2.3854rem + 11.7206vw, 11.1759rem);
+  --step-10: clamp(5.6433rem, 2.4849rem + 15.3132vw, 13.9698rem);
+  --space-0: "0px";
+  --space-3xs: clamp(0.3125rem, 0.2888rem + 0.1149vw, 0.375rem);
+  --space-2xs: clamp(0.5625rem, 0.4914rem + 0.3448vw, 0.75rem);
+  --space-xs: clamp(0.875rem, 0.7802rem + 0.4598vw, 1.125rem);
+  --space-s: clamp(1.125rem, 0.9828rem + 0.6897vw, 1.5rem);
+  --space-m: clamp(1.6875rem, 1.4741rem + 1.0345vw, 2.25rem);
+  --space-l: clamp(2.25rem, 1.9655rem + 1.3793vw, 3rem);
+  --space-xl: clamp(3.375rem, 2.9483rem + 2.069vw, 4.5rem);
+  --space-2xl: clamp(4.5rem, 3.931rem + 2.7586vw, 6rem);
+  --space-3xl: clamp(6.75rem, 5.8966rem + 4.1379vw, 9rem);
+}
+
+.step--3 {
+  font-size: var(--step--3);
+}
+
+.step--2 {
+  font-size: var(--step--2);
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}
+
+.step-0 {
+  font-size: var(--step-0);
+}
+
+.step-1 {
+  font-size: var(--step-1);
+}
+
+.step-2 {
+  font-size: var(--step-2);
+}
+
+.step-3 {
+  font-size: var(--step-3);
+}
+
+.step-4 {
+  font-size: var(--step-4);
+}
+
+.step-5 {
+  font-size: var(--step-5);
+}
+
+.step-6 {
+  font-size: var(--step-6);
+}
+
+.step-7 {
+  font-size: var(--step-7);
+}
+
+.step-8 {
+  font-size: var(--step-8);
+}
+
+.step-9 {
+  font-size: var(--step-9);
+}
+
+.step-10 {
+  font-size: var(--step-10);
+}
+
+.space--3 {
+  padding: var(--space--3);
+}
+
+.space--2 {
+  padding: var(--space--2);
+}
+
+.space--1 {
+  padding: var(--space--1);
+}
+
+.space-0 {
+  padding: var(--space-0);
+}
+
+.space-1 {
+  padding: var(--space-1);
+}
+
+.space-2 {
+  padding: var(--space-2);
+}
+
+.space-3 {
+  padding: var(--space-3);
+}
+
+.space-4 {
+  padding: var(--space-4);
+}
+
+.space-5 {
+  padding: var(--space-5);
+}
+
+.space-6 {
+  padding: var(--space-6);
+}
+
+.space-7 {
+  padding: var(--space-7);
+}
+
+.space-8 {
+  padding: var(--space-8);
+}
+
+.space-9 {
+  padding: var(--space-9);
+}
+
+.space-10 {
+  padding: var(--space-10);
+}
+
+h1 {
+  font-size: var(--_component-title-fontsize, var(--step-6, 4rem));
+}
+
+h2 {
+  font-size: var(--_component-title-fontsize, var(--step-5, 3.5rem));
+}
+
+h3 {
+  font-size: var(--_component-title-fontsize, var(--step-4, 3rem));
+}
+
+h4 {
+  font-size: var(--_component-title-fontsize, var(--step-3, 2.5rem));
+}
+
+h5 {
+  font-size: var(--_component-title-fontsize, var(--step-2, 2rem));
+}
+
+h6 {
+  font-size: var(--_component-title-fontsize, var(--step-1, 1.5rem));
+}
+
+button {
+  font-size: var(--_component-button-fontsize, var(--step-0, 1.5rem));
+  padding: var(--space-3xs) var(--space-xs);
+  font-family: var(--text-font-cashdisplay);
+}
+
+p {
+  margin: 0;
+  font-size: var(--_component-paragraph-fontsize, var(--step-0, 1.5rem));
+}/*# sourceMappingURL=globals.css.map */

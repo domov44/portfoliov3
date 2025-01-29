@@ -1,0 +1,12 @@
+.transition {
+    height: 100vh;
+    width: 100%;
+    z-index: 3;
+    position: fixed;
+    background: var(--bg-color);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(200%);
+}
