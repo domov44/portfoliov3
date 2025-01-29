@@ -37,3 +37,5 @@ export default async function Page({ searchParams }) {
         </MainContent>
     );
 }
+
+export const dynamic = 'force-dynamic'
