@@ -28,7 +28,7 @@ export default async function Page() {
                 items.push({
                     ...originalGallery,
                     id: `${originalGallery.id}-duplicate-${items.length}`,
-                    place: `${originalGallery.place}`,
+                    place: `${originalGallery.place} (${Math.floor(items.length / galleriesElements.length) + 1})`,
                     date: originalGallery.date,
                     url: originalGallery.url,
                     alt: originalGallery.alt
