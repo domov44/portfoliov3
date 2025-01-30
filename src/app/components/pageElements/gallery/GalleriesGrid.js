@@ -186,6 +186,8 @@ const GalleriesGrid = ({ galleriesElements }) => {
                                 src={gallery.url}
                                 alt={gallery.alt || "Gallery Image"}
                                 className={styles.GalleryImage}
+                                width={800}
+                                height={800}
                             />
                         </picture>
                     </li>

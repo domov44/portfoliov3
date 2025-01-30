@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Title from '../../ui/textual/Title';
@@ -11,9 +11,9 @@ import Text from '../../ui/textual/Text';
 import styles from "./HomeSecondSection.module.css";
 import InvisibleLink from '../../ui/button/InvisibleLink';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const HomeSecondSection = ({ bento }) => {
+const HomeSecondSection = ({ content }) => {
+  console.log(content)
+  const [isClient, setIsClient] = useState(false);
   const bentoDivRef = useRef(null);
   const parentBentoDivRef = useRef(null);
   const sectionRef = useRef(null);
@@ -21,9 +21,18 @@ const HomeSecondSection = ({ bento }) => {
   const bentoPosition = { x: 0, y: 0, rotation: 0 };
 
   useEffect(() => {
+    setIsClient(true);
+    gsap.registerPlugin(ScrollTrigger);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     const parentBentoDiv = parentBentoDivRef.current;
     const bentoDiv = bentoDivRef.current;
     const section = sectionRef.current;
+
+    if (!parentBentoDiv || !bentoDiv || !section) return;
 
     const scrollTween = gsap.to(parentBentoDiv, {
       rotation: -10,
@@ -73,57 +82,50 @@ const HomeSecondSection = ({ bento }) => {
     return () => {
       bentoDiv.removeEventListener('mousemove', handleMouseMove);
       bentoDiv.removeEventListener('mouseleave', handleMouseLeave);
-      scrollTween.kill();
+      if (scrollTween) scrollTween.kill();
     };
-  }, []);
+  }, [isClient]);
 
   return (
     <Section ref={sectionRef} highlight={true}>
       <Container direction={"row"} width={"full"} maxwidth={"xl"} align={"center"}>
         <Stack width={"60%"} justify={"center"}>
           <div ref={parentBentoDivRef} className={styles.bentoParentDiv}>
-            {bento.map((item, index) => (
-              <figure key={index} ref={bentoDivRef} className={styles.bentoDiv}>
-                {item.fileType.startsWith("image") ? (
-                  <img src={item.file} alt={item.label} className={styles.video} />
-                ) : item.fileType.startsWith("video") ? (
-                  <video
-                    src={item.file}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className={styles.video}
-                  ></video>
-                ) : null}
-                < Stack >
-                  <Text>{item.label}</Text>
-                </Stack>
-                {item.href && (
-                  <InvisibleLink lineheight={"0"} href={item.href} target={"_blank"}>{item.href}</InvisibleLink>
-                )}
-              </figure>
-            ))}
+            <figure ref={bentoDivRef} className={styles.bentoDiv}>
+              <img 
+                src={content.image.node.sourceUrl} 
+                alt={content.image.node.altText} 
+                className={styles.video} 
+              />
+              <Stack>
+                <Text>{content.link.title}</Text>
+              </Stack>
+              {content.link && (
+                <InvisibleLink 
+                  lineheight={"0"} 
+                  href={content.link.url} 
+                  target={"_blank"}
+                >
+                </InvisibleLink>
+              )}
+            </figure>
           </div>
         </Stack>
         <Stack direction={"column"} width={"40%"} spacing={"20px"}>
-          <Title level={3} className="default step-1">
-            What do I do as a devops developer & as a lead developer?
-          </Title>
-          <Stack direction={"column"}>
-            <Text>
-              I manage web applications from A to Z, throughout the devops cycle.
-            </Text>
-            <Text>
-              I automate and secure your project.
-            </Text>
-          </Stack>
-          <Button className={"step-1"} variant={"primary"} href="/about-me" transition>
-            about me
-          </Button>
+          <div className="flex directionColumn spacing_sm txt_group" dangerouslySetInnerHTML={{ __html: content.text }}/>
+          {content.button && (
+            <Button 
+              className={"step-1"} 
+              variant={"primary"} 
+              href={content.button.url} 
+              transition
+            >
+              {content.button.title}
+            </Button>
+          )}
         </Stack>
       </Container>
-    </Section >
+    </Section>
   );
 };
 
