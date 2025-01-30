@@ -1,13 +1,24 @@
 export const BLOCK_SECTION_IMAGE_TEXT = `
   ... on BlocksContentSectionImageTexteLayout {
     __typename
-    direction
-    text
-    image {
-      node {
-        altText
-        sourceUrl
-      }
+     direction
+          fieldGroupName
+          heading
+          scroll
+          text
+          button {
+            title
+            url
+          }
+          image {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          link {
+            title
+            url
     }
   }
 `;

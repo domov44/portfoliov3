@@ -8,6 +8,7 @@ import { gsap } from 'gsap';
 import Stack from '../../ui/wrapper/Stack';
 import TextLink from '../../ui/textual/TextLink';
 import Image from 'next/image';
+import styles from './HomeHero.module.css';
 
 
 const ImageList = styled.ul`
@@ -30,13 +31,6 @@ const ImageItem = styled.li`
     transition: width 0.3s ease, height 0.3s ease;
 `;
 
-const StyledImage = styled(Image)`
-    width: 100%;
-    height: 100%;
-    border-radius: 1vw;
-    object-fit: cover;
-`;
-
 const ImagesList = ({ images }) => {
     return (
         <ImageList>
@@ -45,9 +39,12 @@ const ImagesList = ({ images }) => {
                     key={index}
                     className={`image-container-${index} hidden`}
                 >
-                    <StyledImage
+                    <Image
+                        className={styles.thumnailImage}
                         src={image.sourceUrl}
                         alt={image.alt}
+                        width={250}
+                        height={250}
                     />
                 </ImageItem>
             ))}
@@ -107,7 +104,7 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
 
             const velocity = distance / timeDelta || 1;
 
-            if (distanceVW >= 7) { 
+            if (distanceVW >= 7) {
                 const availableIndices = images.map((_, index) => index)
                     .filter(index => !visibleImages.includes(index));
 

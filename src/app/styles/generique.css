@@ -6,6 +6,14 @@
   overflow: hidden;
 }
 
+.flex {
+  display: flex;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
 .hidden {
   opacity: 0;
   visibility: hidden;

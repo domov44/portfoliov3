@@ -1,41 +1,23 @@
 import { getPage } from './lib/requests/web_page';
 import MainContent from './layouts/MainContent';
-import HomeHero from './components/pageElements/home/HomeHero'
+import ComponentAdapter from './components/adapter/componentAdapter';
 
 export default async function Page({ searchParams }) {
-    const preview = searchParams?.preview === 'true';
-    const data = await getPage('home', preview, searchParams);
+    const data = await getPage('home', searchParams);
     const page = data?.page;
-
-    const contentBlock = page?.blocks?.content?.[0];
-
-    const images = contentBlock?.postType?.nodes?.map(node => ({
-        alt: node.works?.thumbnail?.node?.altText || '',
-        sourceUrl: node.works?.thumbnail?.node?.sourceUrl || ''
-    })) || [];
-
-    const heading = contentBlock?.heading || '';
-    const leftUrl = {
-        title: contentBlock?.leftUrl?.title || '',
-        url: contentBlock?.leftUrl?.url || ''
-    };
-    const rightUrl = {
-        title: contentBlock?.rightUrl?.title || '',
-        url: contentBlock?.rightUrl?.url || ''
-    };
-    const centerText = contentBlock?.centerText || '';
+    const contentPage = page?.blocks?.content || [];
 
     return (
         <MainContent>
-            <HomeHero
-                images={images}
-                heading={heading}
-                leftUrl={leftUrl}
-                rightUrl={rightUrl}
-                centerText={centerText}
-            />
+            {contentPage.map((block, index) => (
+                <ComponentAdapter 
+                    key={index} 
+                    typename={block.__typename} 
+                    data={block} 
+                />
+            ))}
         </MainContent>
     );
 }
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
