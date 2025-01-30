@@ -35,7 +35,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'www.masseur-electrique.nexus-corp.fr',
+        hostname: 'www.portfolio.nexus-corp.fr',
         port: '',
         pathname: '/wp-content/uploads/**',
       },
