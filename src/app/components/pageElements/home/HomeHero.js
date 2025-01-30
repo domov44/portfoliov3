@@ -7,6 +7,7 @@ import Hero from '../../ui/wrapper/Hero';
 import { gsap } from 'gsap';
 import Stack from '../../ui/wrapper/Stack';
 import TextLink from '../../ui/textual/TextLink';
+import Image from 'next/image';
 
 
 const ImageList = styled.ul`
@@ -29,7 +30,7 @@ const ImageItem = styled.li`
     transition: width 0.3s ease, height 0.3s ease;
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled(Image)`
     width: 100%;
     height: 100%;
     border-radius: 1vw;
