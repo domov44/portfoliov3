@@ -1,6 +1,7 @@
 import HomeHero from "../blocks/HomeHero";
 import ImageText from "../blocks/ImageText";
-import HomeTravel from "../pageElements/home/HomeTravel";
+import WorkGrid from "../blocks/WorkGrid";
+import GalleriesHighlight from "../blocks/GalleriesHighlight";
 
 export default function ComponentAdapter({ data, typename }) {
     switch (typename) {
@@ -25,7 +26,7 @@ export default function ComponentAdapter({ data, typename }) {
             );
         case 'BlocksContentGalleryHighlightLayout':
             return (
-                <HomeTravel
+                <GalleriesHighlight
                     heading={data.heading}
                     background={data.backgroundImage?.node ? [{
                         alt: data.backgroundImage.node.altText || '',
@@ -41,6 +42,23 @@ export default function ComponentAdapter({ data, typename }) {
                     link={{ title: data.link?.title || '', url: data.link?.url || '' }}
                     text={data.text}
                 />
+            );
+        case 'BlocksContentWorkHighlightLayout':
+            return (
+                <WorkGrid
+                    button={{ title: data.button.title, url: data.button.url }}
+                    heading={data.heading}
+                    videos={
+                        data.works?.nodes?.map(work => ({
+                            id: work.id,
+                            slug: work.slug,
+                            video: work.works?.video
+                                ? [{ mediaItemUrl: work.works.video.node?.mediaItemUrl || '' }]
+                                : []
+                        })) || []
+                    }
+                />
+
             );
         default:
             return null;

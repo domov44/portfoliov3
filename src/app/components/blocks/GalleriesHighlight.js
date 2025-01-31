@@ -1,13 +1,13 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Title from '../../ui/textual/Title';
-import Stack from '../../ui/wrapper/Stack';
-import Section from '../../ui/wrapper/Section';
-import TextLink from '../../ui/textual/TextLink';
-import styles from './HomeTravel.module.css';
+import Title from '../ui/textual/Title';
+import Stack from '../ui/wrapper/Stack';
+import Section from '../ui/wrapper/Section';
+import TextLink from '../ui/textual/TextLink';
+import styles from './GalleriesHighlight.module.css';
 
-const HomeTravel = ({ gallery, background, link, heading, text }) => {
+const GalleriesHighlight = ({ gallery, background, link, heading, text }) => {
     const imageRefs = useRef([]);
     const sectionRef = useRef(null);
     const imageBgRef = useRef(null);
@@ -110,4 +110,4 @@ const HomeTravel = ({ gallery, background, link, heading, text }) => {
     );
 };
 
-export default HomeTravel;
+export default GalleriesHighlight;
