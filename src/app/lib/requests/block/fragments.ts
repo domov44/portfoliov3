@@ -24,6 +24,32 @@ export const BLOCK_SECTION_IMAGE_TEXT = `
   }
 `;
 
+export const BLOCK_SECTION_WORKS_HIGHLIGHT = `
+  ... on BlocksContentWorkHighlightLayout {
+      __typename
+          heading
+          button{
+          title
+            url
+          }
+          works {
+            nodes {
+              ... on Work {
+                id
+                slug
+                works {
+                  video {
+                    node {
+                      mediaItemUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+`;
+
 export const BLOCK_SECTION_GALLERIES_HIGHLIGHT = `
   ... on BlocksContentGalleryHighlightLayout {
     __typename
