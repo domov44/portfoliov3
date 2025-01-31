@@ -1,6 +1,7 @@
 import HomeHero from "../blocks/HomeHero";
 import ImageText from "../blocks/ImageText";
 import WorkGrid from "../blocks/WorkGrid";
+import MatterShapes from '../blocks/MatterShapes'
 import GalleriesHighlight from "../blocks/GalleriesHighlight";
 
 export default function ComponentAdapter({ data, typename }) {
@@ -43,6 +44,13 @@ export default function ComponentAdapter({ data, typename }) {
                     text={data.text}
                 />
             );
+            case 'BlocksContentMatterJsLayout':
+                return (
+                    <MatterShapes
+                        heading={data.heading}
+                        images={data.skillsLogo?.nodes?.map(skill => skill.skills?.colisionImage?.node?.sourceUrl) || []}
+                    />
+                );            
         case 'BlocksContentWorkHighlightLayout':
             return (
                 <WorkGrid
@@ -58,7 +66,6 @@ export default function ComponentAdapter({ data, typename }) {
                         })) || []
                     }
                 />
-
             );
         default:
             return null;

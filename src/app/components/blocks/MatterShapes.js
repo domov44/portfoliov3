@@ -2,17 +2,14 @@
 
 import React, { useEffect, useRef } from 'react';
 import * as Matter from 'matter-js';
-import decomp from 'poly-decomp';
-import Title from '../../ui/textual/Title';
-import Section from '../../ui/wrapper/Section';
+import Title from '../ui/textual/Title';
+import Section from '../ui/wrapper/Section';
 
-const MatterShapes = ({ images }) => {
+const MatterShapes = ({ images, heading }) => {
   const sceneRef = useRef(null);
 
   useEffect(() => {
     if (!sceneRef.current || images.length === 0) return;
-
-    Matter.Common.setDecomp(decomp);
 
     const { Engine, Render, Runner, MouseConstraint, Mouse, Composite, Bodies } = Matter;
 
@@ -101,7 +98,7 @@ const MatterShapes = ({ images }) => {
 
   return (
     <Section fullWidth>
-      <Title level={2} className="default">Which technologies?</Title>
+      {heading && <Title level={2} className="default">{heading}</Title>}
       <div ref={sceneRef} style={{ width: '100%', height: '80vh', overflow: 'hidden' }} />
     </Section>
   );

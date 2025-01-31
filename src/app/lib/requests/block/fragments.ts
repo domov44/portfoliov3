@@ -1,3 +1,24 @@
+export const BLOCK_SECTION_SKILLS_COLISION = `
+  ... on BlocksContentMatterJsLayout {
+          __typename
+          heading
+          skillsLogo {
+            nodes {
+              ... on Skill {
+                id
+                skills {
+                  colisionImage {
+                    node {
+                      sourceUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
+}
+`;
+
 export const BLOCK_SECTION_IMAGE_TEXT = `
   ... on BlocksContentSectionImageTexteLayout {
     __typename
