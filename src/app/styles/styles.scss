@@ -7,12 +7,30 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.txt_group{
+.txt_group {
     h3 {
-        color:var(--color-title);
+        color: var(--color-title);
         font-size: var(--step-1);
         margin: 0;
     }
+
+    h4 {
+        color: var(--color-title);
+        font-size: var(--step-0);
+        margin: 0;
+    }
+}
+
+.btt_ten_zero {
+    transform: translate3d(-10px, -100px, 0px) rotate(10deg);
+}
+
+.btt_minus_ten_ten {
+    transform: translate3d(-10px, 150px, 0px) rotate(10deg);
+}
+
+.ttb_ten_minus_ten {
+    transform: translate3d(-10px, -100px, 0px) rotate(-10deg);
 }
 
 .pointer {
