@@ -5,6 +5,7 @@ export const BLOCK_SECTION_IMAGE_TEXT = `
           fieldGroupName
           heading
           scroll
+          variant
           text
           button {
             title

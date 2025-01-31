@@ -9,9 +9,9 @@ import Button from '../../ui/button/Button';
 import Text from '../../ui/textual/Text';
 import styles from "./HomeSecondSection.module.css";
 import InvisibleLink from '../../ui/button/InvisibleLink';
+import Title from '../../ui/textual/Title';
 
 const HomeSecondSection = ({ content }) => {
-  console.log(content)
   const [isClient, setIsClient] = useState(false);
   const bentoDivRef = useRef(null);
   const parentBentoDivRef = useRef(null);
@@ -19,10 +19,26 @@ const HomeSecondSection = ({ content }) => {
   const parentBentoPosition = { x: 0, y: 0, rotation: 0 };
   const bentoPosition = { x: 0, y: 0, rotation: 0 };
 
+  let classCss;
+  switch (content.scroll?.[0]) {
+    case "bottom to top and 10deg to 0deg":
+      classCss = "btt_ten_zero";
+      break;
+    case "top to bottom and 10deg to -10deg":
+      classCss = "ttb_ten_minus_ten";
+      break;
+    case "bottom to top and -10deg to 10deg":
+      classCss = "btt_minus_ten_ten";
+      break;
+    default:
+      classCss = "btt_minus_ten_ten";
+  }
+
   useEffect(() => {
     setIsClient(true);
     gsap.registerPlugin(ScrollTrigger);
   }, []);
+
 
   useEffect(() => {
     if (!isClient) return;
@@ -33,10 +49,23 @@ const HomeSecondSection = ({ content }) => {
 
     if (!parentBentoDiv || !bentoDiv || !section) return;
 
+    let animationSettings;
+    switch (content.scroll?.[0]) {
+      case "bottom to top and 10deg to 0deg":
+        animationSettings = { rotation: -10, x: -10, y: 20 };
+        break;
+      case "top to bottom and 10deg to -10deg":
+        animationSettings = { rotation: 10, x: 10, y: 20 };
+        break;
+      case "bottom to top and -10deg to 10deg":
+        animationSettings = { rotation: -10, x: 10, y: -200 };
+        break;
+      default:
+        animationSettings = { rotation: 10, x: -10, y: 20 };
+    }
+
     const scrollTween = gsap.to(parentBentoDiv, {
-      rotation: -10,
-      x: 10,
-      y: 20,
+      ...animationSettings,
       ease: "none",
       scrollTrigger: {
         trigger: section,
@@ -83,31 +112,38 @@ const HomeSecondSection = ({ content }) => {
       bentoDiv.removeEventListener('mouseleave', handleMouseLeave);
       if (scrollTween) scrollTween.kill();
     };
-  }, [isClient]);
+  }, [isClient, content.scroll]);
 
   return (
-    <Section ref={sectionRef} highlight={true}>
-      <Container 
-        direction={content.direction ? "row-reverse" : "row"} 
-        width={"full"} 
-        maxwidth={"xl"} 
+    <Section ref={sectionRef} highlight={content.variant}>
+      {content.heading && (
+        <Stack>
+          <Title level={2} className="colored font8vw text_align_center w60vw ln0_8">
+            {content.heading}
+          </Title>
+        </Stack>
+      )}
+      <Container
+        direction={content.direction ? "row-reverse" : "row"}
+        width={"full"}
+        maxwidth={"xl"}
         align={"center"}
       >
         <Stack width={"60%"} justify={"center"}>
-          <div ref={parentBentoDivRef} className={styles.bentoParentDiv}>
+          <div ref={parentBentoDivRef} className={styles.bentoParentDiv + ' ' + classCss}>
             <figure ref={bentoDivRef} className={styles.bentoDiv}>
-              <img 
-                src={content.image.node.sourceUrl} 
-                alt={content.image.node.altText} 
-                className={styles.video} 
+              <img
+                src={content.image.node.sourceUrl}
+                alt={content.image.node.altText}
+                className={styles.video}
               />
               <Stack>
                 <Text>{content.link.title}</Text>
               </Stack>
               {content.link && (
-                <InvisibleLink 
-                  lineheight={"0"} 
-                  href={content.link.url} 
+                <InvisibleLink
+                  lineheight={"0"}
+                  href={content.link.url}
                   target={"_blank"}
                 />
               )}
@@ -115,12 +151,12 @@ const HomeSecondSection = ({ content }) => {
           </div>
         </Stack>
         <Stack direction={"column"} width={"40%"} spacing={"20px"}>
-          <div className="flex directionColumn spacing_sm txt_group" dangerouslySetInnerHTML={{ __html: content.text }}/>
+          <div className="flex directionColumn spacing_sm txt_group" dangerouslySetInnerHTML={{ __html: content.text }} />
           {content.button && (
-            <Button 
-              className={"step-1"} 
-              variant={"primary"} 
-              href={content.button.url} 
+            <Button
+              className={"step-1"}
+              variant={"primary"}
+              href={content.button.url}
               transition
             >
               {content.button.title}
