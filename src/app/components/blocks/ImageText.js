@@ -2,16 +2,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Stack from '../../ui/wrapper/Stack';
-import Section from '../../ui/wrapper/Section';
-import Container from '../../ui/wrapper/Container';
-import Button from '../../ui/button/Button';
-import Text from '../../ui/textual/Text';
-import styles from "./HomeSecondSection.module.css";
-import InvisibleLink from '../../ui/button/InvisibleLink';
-import Title from '../../ui/textual/Title';
+import Stack from '../ui/wrapper/Stack';
+import Section from '../ui/wrapper/Section';
+import Container from '../ui/wrapper/Container';
+import Button from '../ui/button/Button';
+import Text from '../ui/textual/Text';
+import styles from "./ImageText.module.css";
+import InvisibleLink from '../ui/button/InvisibleLink';
+import Title from '../ui/textual/Title';
 
-const HomeSecondSection = ({ content }) => {
+const ImageText = ({ content }) => {
   const [isClient, setIsClient] = useState(false);
   const bentoDivRef = useRef(null);
   const parentBentoDivRef = useRef(null);
@@ -168,4 +168,4 @@ const HomeSecondSection = ({ content }) => {
   );
 };
 
-export default HomeSecondSection;
+export default ImageText;

@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import Title from '../../ui/textual/Title';
-import Hero from '../../ui/wrapper/Hero';
+import Title from '../ui/textual/Title';
+import Hero from '../ui/wrapper/Hero';
 import { gsap } from 'gsap';
-import Stack from '../../ui/wrapper/Stack';
-import TextLink from '../../ui/textual/TextLink';
+import Stack from '../ui/wrapper/Stack';
+import TextLink from '../ui/textual/TextLink';
 import Image from 'next/image';
 import styles from './HomeHero.module.css';
 

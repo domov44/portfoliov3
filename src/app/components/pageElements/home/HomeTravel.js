@@ -1,67 +1,77 @@
 'use client';
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Title from '../../ui/textual/Title';
 import Stack from '../../ui/wrapper/Stack';
 import Section from '../../ui/wrapper/Section';
 import TextLink from '../../ui/textual/TextLink';
 import styles from './HomeTravel.module.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const HomeTravel = ({ images, background }) => {
+const HomeTravel = ({ gallery, background, link, heading, text }) => {
     const imageRefs = useRef([]);
     const sectionRef = useRef(null);
     const imageBgRef = useRef(null);
 
+    const galleryImages = gallery?.flatMap(gal => gal.images.map(img => img.sourceUrl)) || [];
+
     useEffect(() => {
-        if (sectionRef.current && imageBgRef.current) {
-            const sectionHeight = sectionRef.current.offsetHeight;
-            const computedStyle = window.getComputedStyle(sectionRef.current);
-            const paddingTop = parseFloat(computedStyle.paddingTop);
-            const paddingBottom = parseFloat(computedStyle.paddingBottom);
-            const heightWithoutPadding = sectionHeight - paddingTop - paddingBottom;
+        const loadGSAP = async () => {
+            if (typeof window !== 'undefined') {
+                const gsap = (await import('gsap')).default;
+                const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+                
+                gsap.registerPlugin(ScrollTrigger);
 
-            gsap.to(imageBgRef.current, {
-                y: '10%',
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top top',
-                    end: `bottom top`,
-                    scrub: true,
-                },
-            });
+                if (sectionRef.current && imageBgRef.current) {
+                    const sectionHeight = sectionRef.current.offsetHeight;
+                    const computedStyle = window.getComputedStyle(sectionRef.current);
+                    const paddingTop = parseFloat(computedStyle.paddingTop);
+                    const paddingBottom = parseFloat(computedStyle.paddingBottom);
+                    const heightWithoutPadding = sectionHeight - paddingTop - paddingBottom;
 
-            ScrollTrigger.create({
-                trigger: sectionRef.current,
-                start: 'top top',
-                end: () => `${heightWithoutPadding} bottom`,
-                onUpdate: (self) => {
-                    const progress = self.progress || 0;
-                    const totalItems = images.length;
-                    const indexToHide = Math.floor(progress * (totalItems - 1));
-
-                    imageRefs.current.forEach((image, index) => {
-                        if (index <= indexToHide) {
-                            gsap.set(image, { opacity: 1 });
-                        } else {
-                            gsap.set(image, { opacity: 0 });
-                        }
+                    gsap.to(imageBgRef.current, {
+                        y: '10%',
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top top',
+                            end: `bottom top`,
+                            scrub: true,
+                        },
                     });
-                },
-                scrub: true,
-            });
-        }
-    }, [images]);
+
+                    ScrollTrigger.create({
+                        trigger: sectionRef.current,
+                        start: 'top top',
+                        end: () => `${heightWithoutPadding} bottom`,
+                        onUpdate: (self) => {
+                            const progress = self.progress || 0;
+                            const totalItems = galleryImages.length;
+                            const indexToHide = Math.floor(progress * (totalItems - 1));
+
+                            imageRefs.current.forEach((image, index) => {
+                                if (index <= indexToHide) {
+                                    gsap.set(image, { opacity: 1 });
+                                } else {
+                                    gsap.set(image, { opacity: 0 });
+                                }
+                            });
+                        },
+                        scrub: true,
+                    });
+                }
+            }
+        };
+
+        loadGSAP();
+    }, [galleryImages]);
 
     return (
         <>
             <Section>
                 <Stack width="100%" justify="center">
                     <Title level={2} className="colored font8vw text_align_center w70vw ln0_8">
-                        BEYOND CODE. CAPTURING MOMENTS
+                        {heading}
                     </Title>
                 </Stack>
             </Section>
@@ -73,7 +83,7 @@ const HomeTravel = ({ images, background }) => {
                         </Stack>
                         <Stack width="33.3%" justify="center">
                             <ul className={styles.image_list}>
-                                {images.map((src, index) => (
+                                {galleryImages.map((src, index) => (
                                     <li
                                         className={styles.image_item}
                                         key={index}
@@ -81,18 +91,18 @@ const HomeTravel = ({ images, background }) => {
                                         style={{ opacity: index === 0 ? 1 : 0 }}
                                     >
                                         <picture className={styles.picture}>
-                                            <img className={styles.image} src={src} alt={`Gallery`} />
+                                            <Image width={800} height={800} className={styles.image} src={src} alt={`Gallery ${index + 1}`} />
                                         </picture>
                                     </li>
                                 ))}
                             </ul>
                         </Stack>
                         <Stack width="33.3%" justify="end">
-                            <TextLink href="https://www.linkedin.com/in/ronan-scotet-concepteur-web/">@ronanscotet</TextLink>
+                            <TextLink href={link.url || '#'}>{link.title}</TextLink>
                         </Stack>
                     </Stack>
                     <figure className={styles.image_section}>
-                        <img className={styles.image_bg} ref={imageBgRef} src={background} alt="Background" />
+                        <Image width={3000} height={3000} className={styles.image_bg} ref={imageBgRef} src={background[0]?.sourceUrl || ''} alt="Background" />
                     </figure>
                 </Stack>
             </Section>

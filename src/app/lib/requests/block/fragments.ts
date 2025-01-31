@@ -24,6 +24,39 @@ export const BLOCK_SECTION_IMAGE_TEXT = `
   }
 `;
 
+export const BLOCK_SECTION_GALLERIES_HIGHLIGHT = `
+  ... on BlocksContentGalleryHighlightLayout {
+    __typename
+     heading
+          backgroundImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          galleries {
+            nodes {
+              ... on Gallery {
+                id
+                galleries {
+                  image {
+                    node {
+                      altText
+                      sourceUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
+          link {
+            title
+            url
+          }
+          text
+  }
+`;
+
 export const BLOCK_SECTION_ACCORDION = `
   ... on BlocksContentSectionAccordionLayout {
     __typename
