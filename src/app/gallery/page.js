@@ -19,6 +19,8 @@ export default async function Page() {
             url: node.galleries?.image?.node?.sourceUrl || ''
         }));
 
+        console.log(galleriesElements.length)
+
         if (galleriesElements.length < 15) {
             const items = [...galleriesElements];
             while (items.length < 15) {

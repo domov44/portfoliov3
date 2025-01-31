@@ -2,7 +2,7 @@ export const BLOCK_SECTION_SKILLS_COLISION = `
   ... on BlocksContentMatterJsLayout {
           __typename
           heading
-          skillsLogo {
+          skillsLogo(first: 50)  {
             nodes {
               ... on Skill {
                 id
@@ -187,7 +187,7 @@ export const BLOCK_WORKS_THUMBNAIL_TRACK_MOUSE = `
      url
      title
     }
-    postType {
+    postType(first: 15)  {
       nodes {
         ... on Work {
           id
