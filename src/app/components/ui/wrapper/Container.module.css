@@ -8,6 +8,10 @@
   .directionRow {
     flex-direction: row;
   }
+
+  .directionRowReverse {
+    flex-direction: row-reverse;
+  }
   
   .directionColumn {
     flex-direction: column;

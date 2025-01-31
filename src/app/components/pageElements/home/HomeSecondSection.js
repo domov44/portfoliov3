@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Title from '../../ui/textual/Title';
 import Stack from '../../ui/wrapper/Stack';
 import Section from '../../ui/wrapper/Section';
 import Container from '../../ui/wrapper/Container';
@@ -88,7 +87,12 @@ const HomeSecondSection = ({ content }) => {
 
   return (
     <Section ref={sectionRef} highlight={true}>
-      <Container direction={"row"} width={"full"} maxwidth={"xl"} align={"center"}>
+      <Container 
+        direction={content.direction ? "row-reverse" : "row"} 
+        width={"full"} 
+        maxwidth={"xl"} 
+        align={"center"}
+      >
         <Stack width={"60%"} justify={"center"}>
           <div ref={parentBentoDivRef} className={styles.bentoParentDiv}>
             <figure ref={bentoDivRef} className={styles.bentoDiv}>
@@ -105,8 +109,7 @@ const HomeSecondSection = ({ content }) => {
                   lineheight={"0"} 
                   href={content.link.url} 
                   target={"_blank"}
-                >
-                </InvisibleLink>
+                />
               )}
             </figure>
           </div>
