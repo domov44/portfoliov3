@@ -19,7 +19,6 @@
   margin: 0;
   padding: 0;
   transform-origin: center;
-  transform: translate3d(-10px, -100px, 0px) rotate(10deg);
 }
 
 .video {
