@@ -24,7 +24,7 @@ export async function getPreviewWork(id, idType = "DATABASE_ID") {
 
 const GET_GALLERIES_QUERY = `
  query GET_GALLERIES {
-  galleries {
+  galleries(first: 15) {
     nodes {
     id
       galleries {
