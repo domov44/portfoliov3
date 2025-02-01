@@ -7,6 +7,9 @@ import Section from '../../components/ui/wrapper/Section';
 import Stack from '../../components/ui/wrapper/Stack';
 import Title from '../../components/ui/textual/Title';
 import Text from '../../components/ui/textual/Text';
+import MatterShapes from '../../components/blocks/MatterShapes';
+import SingleMainSection from "../../components/pageElements/work/single/SingleMainSection"
+import SingleDoubleSection from "../../components/pageElements/work/single/SingleDoubleSection"
 
 async function Page({ params }) {
     const { slug } = await params;
@@ -34,6 +37,25 @@ async function Page({ params }) {
                     <Text textalign="center" maxwidth={"40vw"}>{work.works.description}</Text>
                 </Stack>
             </Section>
+            <MatterShapes heading={work.works.skillsSection[0].heading && work.works.skillsSection[0].heading} images={work.works?.skillsSection[0].skills.nodes.map(skill => skill.skills?.colisionImage?.node?.sourceUrl) || []} />
+            {work.works.gallery && work.works.gallery.map((row, index) => {
+                switch (row.__typename) {
+                    case "WorksGalleryOneLayout":
+                        return <SingleMainSection key={index} image={row.oneByOne.node} />;
+
+                    case "WorksGalleryTwoLayout":
+                        return (
+                            <SingleDoubleSection
+                                key={index}
+                                left_image={row.left.node}
+                                right_image={row.right.node}
+                            />
+                        );
+
+                    default:
+                        return null;
+                }
+            })}
         </MainContent>
     );
 }
