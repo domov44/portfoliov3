@@ -1,0 +1,33 @@
+.image_bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transform: scale(1.15);
+    will-change: transform;
+}
+
+.image_section{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 0;
+    background: black;
+    z-index: -1;
+}
+
+.wrapper_single{
+    width: 100%;
+    gap:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+}
+
+.stack_single{
+    width: 50%;
+    height: 100%;
+}
