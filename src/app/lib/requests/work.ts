@@ -154,6 +154,51 @@ export async function getWorkBySlug(slug) {
             mediaItemUrl
           }
         }
+          skillsSection {
+        ... on WorksSkillsSectionSkillslogoLayout {
+          heading
+          skills {
+            nodes {
+              ... on Skill {
+                id
+                skills {
+                  colisionImage {
+                    node {
+                      sourceUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+  }
+        gallery {
+        ... on WorksGalleryOneLayout {
+          __typename
+          oneByOne {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+        }
+        ... on WorksGalleryTwoLayout {
+          __typename
+          left {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          right {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+        }
+      }
       }
     }
     query WorkBySlug($id: ID!, $idType: WorkIdType!) {
