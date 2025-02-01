@@ -123,71 +123,35 @@ export async function getAllWorksWithSlug() {
 }
 
 
-export async function getWorkAndMoreWorks(slug, preview, previewData) {
-  const workPreview = preview && previewData?.work;
-  // The slug may be the id of an unpublished work
+export async function getWorkBySlug(slug) {
   const isId = Number.isInteger(Number(slug));
-  const isSameWork = isId
-    ? workPreview && Number(slug) === workPreview.id
-    : workPreview && slug === workPreview.slug;
-  const isDraft = isSameWork && workPreview?.status === "draft";
 
   const data = await fetchAPI(
     `
     fragment WorkFields on Work {
+      id
       title
-      slug
-      date
-      seo {
-        title
-        metaDesc
-        fullHead
+      workCategories {
+      nodes {
+        name
       }
-      featuredImage {
-        node {
-          sourceUrl
-        }
-      }
-      blocks {
-        content {
-          ${BLOCK_SECTION_TEXT}
-          ${BLOCK_SECTION_IMAGE_TEXT}
-          ${BLOCK_RELATION_LISTS}
-          ${BLOCK_FEATURES_LISTS}
-          ${BLOCK_SECTION_ACCORDION}
-        }
-      }
+    }
       works {
-        gallery {
-           nodes {
-            id
-            sourceUrl
-            altText
-          }
-        }
-        link
+        context
+        date
         description
-        rating
-        price
-        details {
+        role
+        github_link {
           title
-          list {
-            listItem
-          }
+           url
         }
-      }
-      productCategories {
-        edges {
-          node {
-            name
-            slug
-          }
+        projectLink {
+          title
+          url
         }
-      }
-      productTags {
-        edges {
+        video {
           node {
-            name
+            mediaItemUrl
           }
         }
       }
@@ -195,32 +159,18 @@ export async function getWorkAndMoreWorks(slug, preview, previewData) {
     query WorkBySlug($id: ID!, $idType: WorkIdType!) {
       work(id: $id, idType: $idType) {
         ...WorkFields
-        content
-      }
-      works(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
-        edges {
-          node {
-            ...WorkFields
-          }
-        }
       }
     }
     `,
     {
       variables: {
-        id: isDraft ? workPreview.id : slug,
-        idType: isDraft ? "DATABASE_ID" : "SLUG",
+        id: isId ? slug : slug,
+        idType: isId ? "DATABASE_ID" : "SLUG",
       },
-    },
+    }
   );
 
-  // Draft works may not have a slug
-  if (isDraft) data.work.slug = workPreview.id;
+  const work = data?.work || null;
 
-  // Filter out the main work
-  data.works.edges = data.works.edges.filter(({ node }) => node.slug !== slug);
-  // If there are still 3 works, remove the last one
-  if (data.works.edges.length > 2) data.works.edges.pop();
-
-  return data;
+  return { work };
 }
