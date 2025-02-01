@@ -24,19 +24,18 @@ export async function getPreviewWork(id, idType = "DATABASE_ID") {
 
 const GET_WORKS_QUERY = `
   query GET_WORKS {
-    works {
+    works(first: 100) {
       nodes {
         id
-        title
+        slug
       works {
         context
         date
         description
         role
-        thumbnail {
+        video {
           node {
-            altText
-            sourceUrl
+            mediaItemUrl
           }
         }
       }
