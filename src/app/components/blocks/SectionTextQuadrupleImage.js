@@ -91,13 +91,14 @@ const SectionTextQuadrupleImage = ({ heading, text, bento }) => {
                     align="center"
                     spacing="10vw"
                     zIndex="1"
+                    className="pointer-none"
                 >
                     <Stack width="70vw" justify="center" direction="column" align="center">
-                        <Title level={2} className="colored font8vw text_align_center w70vw ln0_8">
+                        <Title level={2} className="colored font8vw text_align_center w70vw ln0_8 pointer-fill">
                             {heading}
                         </Title>
-                        <Stack width="40vw" justify="center" direction="column" align="center">
-                            <div className="flex directionColumn spacing_sm txt_group" dangerouslySetInnerHTML={{ __html: text }} />
+                        <Stack width="40vw" justify="center" direction="column" align="center" className="pointer-none">
+                            <div className="flex directionColumn spacing_sm txt_group pointer-fill" dangerouslySetInnerHTML={{ __html: text }} />
                         </Stack>
                     </Stack>
                 </Stack>
@@ -113,8 +114,8 @@ const SectionTextQuadrupleImage = ({ heading, text, bento }) => {
                                 <Stack>
                                     <Text>{item.link.title}</Text>
                                 </Stack>
-                                {item.href && (
-                                    <InvisibleLink lineheight={"0"} href={item.node.url} target={"_blank"}>{item.node.title}</InvisibleLink>
+                                {item.link && (
+                                    <InvisibleLink lineheight={"0"} href={item.link.url} target={"_blank"}>{item.link.title}</InvisibleLink>
                                 )}
                             </div>
                         </li>
