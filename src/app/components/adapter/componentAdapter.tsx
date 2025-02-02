@@ -1,8 +1,12 @@
 import HomeHero from "../blocks/HomeHero";
 import ImageText from "../blocks/ImageText";
+import ImageTextParallax from "../blocks/ImageTextParallax";
 import WorkGrid from "../blocks/WorkGrid";
 import MatterShapes from '../blocks/MatterShapes'
 import GalleriesHighlight from "../blocks/GalleriesHighlight";
+import AboutMeHero from "../blocks/AboutMeHero";
+import TextTextSection from "../blocks/TextTextSection";
+import SectionTextQuadrupleImage from "../blocks/SectionTextQuadrupleImage";
 
 export default function ComponentAdapter({ data, typename }) {
     switch (typename) {
@@ -44,13 +48,13 @@ export default function ComponentAdapter({ data, typename }) {
                     text={data.text}
                 />
             );
-            case 'BlocksContentMatterJsLayout':
-                return (
-                    <MatterShapes
-                        heading={data.heading}
-                        images={data.skillsLogo?.nodes?.map(skill => skill.skills?.colisionImage?.node?.sourceUrl) || []}
-                    />
-                );            
+        case 'BlocksContentMatterJsLayout':
+            return (
+                <MatterShapes
+                    heading={data.heading}
+                    images={data.skillsLogo?.nodes?.map(skill => skill.skills?.colisionImage?.node?.sourceUrl) || []}
+                />
+            );
         case 'BlocksContentWorkHighlightLayout':
             return (
                 <WorkGrid
@@ -65,6 +69,46 @@ export default function ComponentAdapter({ data, typename }) {
                                 : []
                         })) || []
                     }
+                />
+            );
+        case 'BlocksContentClassicHeroLayout':
+            return (
+                <AboutMeHero
+                    leftUrl={data.leftUrl}
+                    rightUrl={data.rightUrl}
+                    heading={data.heading}
+                />
+            );
+        case 'BlocksContentSectionImageTextParallaxLayout':
+            return (
+                <ImageTextParallax
+                    direction={data.direction}
+                    heading={data.heading}
+                    button={data.button}
+                    backgroundImage={data.backgroundImage.node}
+                    image={data.image.node}
+                    link={data.link}
+                    text={data.text}
+                />
+            );
+        case 'BlocksContentSectionTextTextLayout':
+            return (
+                <TextTextSection
+                    left={data.left}
+                    right={data.right}
+                />
+            );
+        case 'BlocksContentSectionHeadingQuadrupleImageLayout':
+            return (
+                <SectionTextQuadrupleImage
+                    heading={data.heading}
+                    text={data.text}
+                    bento={Object.values({
+                        topLeftImage: data.topLeftImage,
+                        topRightImage: data.topRightImage,
+                        bottomLeftImage: data.bottomLeftImage,
+                        bottomRightImage: data.bottomRightImage,
+                    })}
                 />
             );
         default:
