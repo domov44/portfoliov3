@@ -157,7 +157,8 @@ const ImageText = ({ content }) => {
               className={"step-1"}
               variant={"primary"}
               href={content.button.url}
-              transition
+              target={content.button.url.startsWith('https://') && '_blank'}
+              transition={!content.button.url.startsWith('https://')}
             >
               {content.button.title}
             </Button>
