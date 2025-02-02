@@ -5,18 +5,18 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Section from '../../../ui/wrapper/Section';
 import styles from './SingleDoubleSection.module.css';
 
+
 function SingleDoubleSection({ left_image, right_image }) {
     const sectionRef = useRef(null);
     const imageRefs = useRef([]);
 
-    
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
     }, []);
 
     useEffect(() => {
         if (sectionRef.current) {
-            imageRefs.current.forEach((image, index) => {
+            imageRefs.current.forEach((image) => {
                 if (image) {
                     gsap.to(image, {
                         y: '10%',
@@ -36,26 +36,20 @@ function SingleDoubleSection({ left_image, right_image }) {
     return (
         <Section className="h80vh defaultPadding align_center" ref={sectionRef}>
             <div className={styles.wrapper_single}>
-                <div className={styles.stack_single}>
-                    <figure className={styles.image_section}>
-                        <img
-                            className={styles.image_bg}
-                            ref={(el) => (imageRefs.current)}
-                            src={left_image.sourceUrl}
-                            alt={left_image.altText}
-                        />
-                    </figure>
-                </div>
-                <div className={styles.stack_single}>
-                    <figure className={styles.image_section}>
-                        <img
-                            className={styles.image}
-                            ref={(el) => (imageRefs.current)}
-                            src={right_image.sourceUrl}
-                            alt={right_image.altText}
-                        />
-                    </figure>
-                </div>
+                {[left_image, right_image].map((image, index) => (
+                    <div key={index} className={styles.stack_single}>
+                        <figure className={styles.image_section}>
+                            <img
+                                className={styles.image_bg}
+                                ref={(el) => {
+                                    if (el) imageRefs.current[index] = el;
+                                }}
+                                src={image.sourceUrl}
+                                alt={image.altText}
+                            />
+                        </figure>
+                    </div>
+                ))}
             </div>
         </Section>
     );
