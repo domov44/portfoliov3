@@ -1,3 +1,104 @@
+export const BLOCK_SECTION_IMAGE_TEXT_PARALLAX = `
+  ... on BlocksContentSectionImageTextParallaxLayout {
+          __typename
+          direction
+          backgroundImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          button {
+            title
+            url
+          }
+          heading
+          image {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          link {
+            title
+            url
+          }
+          text
+        }
+`;
+
+export const BLOCK_SECTION_TEXT_QUADRUPLE_IMAGE = `
+ ... on BlocksContentSectionHeadingQuadrupleImageLayout {
+          __typename
+          heading
+          text
+          topRightImage {
+            image {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            link {
+              title
+              url
+            }
+          }
+          bottomRightImage {
+            image {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            link {
+              title
+              url
+            }
+          }
+          bottomLeftImage {
+            image {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            link {
+              title
+              url
+            }
+          }
+          topLeftImage {
+            image {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            link {
+              title
+              url
+            }
+          }
+        }
+`;
+
+export const BLOCK_SECTION_TEXT_TEXT = `
+  ... on BlocksContentSectionTextTextLayout {
+          __typename
+          left {
+            text
+          }
+          right {
+            text
+            button {
+              title
+              url
+            }
+          }
+        }
+`;
+
 export const BLOCK_SECTION_SKILLS_COLISION = `
   ... on BlocksContentMatterJsLayout {
           __typename
@@ -17,6 +118,21 @@ export const BLOCK_SECTION_SKILLS_COLISION = `
             }
           }
 }
+`;
+
+export const BLOCK_SECTION_CLASSIC_HERO = `
+... on BlocksContentClassicHeroLayout {
+          __typename
+          heading
+          leftUrl {
+            title
+            url
+          }
+          rightUrl {
+            title
+            url
+          }
+        }
 `;
 
 export const BLOCK_SECTION_IMAGE_TEXT = `
