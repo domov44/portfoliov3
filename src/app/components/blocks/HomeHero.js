@@ -53,6 +53,7 @@ const ImagesList = ({ images }) => {
 };
 
 const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
+    console.log(leftUrl.url)
     const [visibleImages, setVisibleImages] = useState([]);
     const heroRef = useRef(null);
     const lastImagePosition = useRef({ x: 0, y: 0, time: performance.now() });
@@ -191,13 +192,13 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
             <Stack direction={"column"} width={"100%"} height={"calc(70vh - 80px)"} justify={"space-between"}>
                 <Stack justify={"space-between"} width={"100%"} zIndex={2} animationType={"animateFadeIn"} opacity={"0"}>
                     <Stack width={"33.3%"}>
-                        <TextLink href={"https://github.com/domov44"}>{leftUrl.title}</TextLink>
+                        <TextLink href={leftUrl.url} target={leftUrl.url.startsWith('https://') && '_blank'}>{leftUrl.title}</TextLink>
                     </Stack>
                     <Stack width={"33.3%"} justify={"center"}>
                         <Title level={6} className="text_align_center default">{centerText}</Title>
                     </Stack>
                     <Stack width={"33.3%"} justify={"end"}>
-                        <TextLink href={"https://www.linkedin.com/in/ronan-scotet-concepteur-web/"}>{rightUrl.title}</TextLink>
+                        <TextLink href={rightUrl.url} target={rightUrl.url.startsWith('https://') && '_blank'}>{rightUrl.title}</TextLink>
                     </Stack>
                 </Stack>
                 <Stack overflow={"hidden"} justify={"end"} width={"100%"}>
