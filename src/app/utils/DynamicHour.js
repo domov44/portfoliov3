@@ -1,5 +1,4 @@
 'use client';
-import Text from '../components/ui/textual/Text';
 import React, { useState, useEffect } from 'react';
 
 const DynamicHour = () => {
@@ -39,11 +38,11 @@ const DynamicHour = () => {
   const { hours, minutes, amPm } = formatTime();
 
   return (
-    <Text className={"step--2"}>Nantes, {' '}
+    <p className={"step--2"}>Nantes, {' '}
       {hours.toLowerCase()}
       <span style={{ opacity: showColon ? 1 : 0 }}>:</span>
       {minutes.toLowerCase()} {amPm}
-    </Text>
+    </p>
   );
 };
 
