@@ -58,6 +58,7 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
     const lastImagePosition = useRef({ x: 0, y: 0, time: performance.now() });
     const zIndexCounter = useRef(1);
     const titleRef = useRef(null);
+    const homeHeroContentRef = useRef(null); 
 
     const titleText = heading;
 
@@ -79,6 +80,12 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
     }, []);
 
     useEffect(() => {
+        gsap.fromTo(
+            homeHeroContentRef.current,
+            { opacity: 0 },
+            { opacity: 1, delay: 1, duration: 1, ease: "power2.out" }
+        );
+
         animateTitle();
     }, [animateTitle]);
 
@@ -189,7 +196,7 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
         <Hero ref={heroRef}>
             <ImagesList images={images} />
             <Stack direction={"column"} width={"100%"} height={"calc(70vh - 80px)"} justify={"space-between"}>
-                <div className={styles.home_hero_content}>
+                <div ref={homeHeroContentRef} className={styles.home_hero_content}>  {/* Ajout du ref */}
                     <div className={styles.home_hero_title}>
                         <Title level={6} className="text_align_center default">{centerText}</Title>
                     </div>
