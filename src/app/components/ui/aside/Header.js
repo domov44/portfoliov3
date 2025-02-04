@@ -19,16 +19,16 @@ function Header({ isopen, toggleMenu, isAnimating }) {
         const menuSpan = menuTextRef.current;
         const closeSpan = closeTextRef.current;
 
-        gsap.set([menuSpan, closeSpan], { 
+        gsap.set([menuSpan, closeSpan], {
             visibility: 'hidden',
             yPercent: 200
         });
 
-        gsap.set(menuSpan, { 
+        gsap.set(menuSpan, {
             yPercent: isopen === 'open' ? -200 : 0,
             visibility: 'visible'
         });
-        gsap.set(closeSpan, { 
+        gsap.set(closeSpan, {
             yPercent: isopen === 'open' ? 0 : 200,
             visibility: 'visible'
         });
@@ -73,13 +73,13 @@ function Header({ isopen, toggleMenu, isAnimating }) {
 
     return (
         <header className={styles.header}>
-            <Container direction="row" align="center" width="full" justify="space-between">
-                <Stack align="center" width="33%">
+            <div className={styles.header_wrapper}>
+                <div className={styles.header_logo}>
                     <InvisibleLink href={"/"} lineheight={"0"} transition>
                         <Logo />
                     </InvisibleLink>
-                </Stack>
-                <Stack align="center" width="33%" justify="center">
+                </div>
+                <div className={styles.header_menu}>
                     <button
                         ref={buttonRef}
                         onClick={handleClick}
@@ -95,11 +95,11 @@ function Header({ isopen, toggleMenu, isAnimating }) {
                             </span>
                         </div>
                     </button>
-                </Stack>
-                <Stack align="center" width="33%" justify="end">
+                </div>
+                <div className={styles.header_time}>
                     <DynamicHour />
-                </Stack>
-            </Container>
+                </div>
+            </div>
         </header>
     );
 }

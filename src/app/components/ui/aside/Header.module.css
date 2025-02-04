@@ -12,6 +12,63 @@
     pointer-events: none;
 }
 
+.header_wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 1rem;
+    width: 100%;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    z-index: 1;
+}
+
+.header_logo {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.header_menu {
+    grid-column-start: 5;
+    grid-column-end: 9;
+    justify-self: center;
+}
+
+.header_time {
+    grid-column-start: 9;
+    grid-column-end: 13;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .header_wrapper {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header_logo {
+        grid-column-start: 1;
+        grid-column-end: 6;
+    }
+}
+
+@media (max-width: 768px) {
+    .header_menu {
+        grid-column-start: 6;
+        grid-column-end: 12;
+        justify-self: end;
+    }
+}
+
+@media (max-width: 768px) {
+    .header_time {
+        display: none;
+    }
+}
+
+
 .asideButton {
     position: relative;
     line-height: 1;
