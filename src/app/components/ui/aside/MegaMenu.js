@@ -66,9 +66,9 @@ function MegaMenu({ isopen, toggleMenu, isAnimating, setIsAnimating }) {
       />
       <aside ref={asideRef} className={styles.aside_menu}>
         <div className={styles.aside_content}>
-          <Stack width={"100%"} spacing={"100px"}>
-            <Stack width={"50%"}></Stack>
-            <Stack width={"50%"} direction={"column"} spacing={"0px"}>
+          <div className={styles.megamenu_wrapper}>
+            <div className={styles.megamenu_asset}></div>
+            <nav className={styles.megamenu_nav}>
               <MegaMenuItem href={"/"} transition onClick={toggleMenu}>
                 Home
               </MegaMenuItem>
@@ -81,25 +81,25 @@ function MegaMenu({ isopen, toggleMenu, isAnimating, setIsAnimating }) {
               <MegaMenuItem href={"/gallery"} transition onClick={toggleMenu}>
                 Gallery
               </MegaMenuItem>
-            </Stack>
-          </Stack>
-          <Stack width={"100%"}>
-            <Stack width={"33.3%"}>
+            </nav>
+          </div>
+          <nav className={styles.menu_social}>
+            <div className={styles.menu_social_item}>
               <TextLink href={"https://github.com/domov44"} className="step-2">
                 github
               </TextLink>
-            </Stack>
-            <Stack width={"33.3%"} justify={"center"}>
+            </div>
+            <div className={styles.menu_social_item}>
               <TextLink href={"https://www.linkedin.com/in/ronan-scotet-concepteur-web/"} className="step-2">
                 linkedin
               </TextLink>
-            </Stack>
-            <Stack width={"33.3%"} justify={"end"}>
+            </div>
+            <div className={styles.menu_social_item}>
               <TextLink href={"https://www.instagram.com/rscotet/profilecard/?igsh=MWtieXhsNGlkdTl4eA=="} className="step-2">
                 instagram
               </TextLink>
-            </Stack>
-          </Stack>
+            </div>
+          </nav>
         </div>
       </aside>
     </div>
