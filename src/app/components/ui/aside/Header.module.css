@@ -82,7 +82,7 @@
     color: var(--color-title);
     font-family: var(--text-font-cashdisplay);
     overflow: hidden;
-    height: 30px;
+    height: 20px;
     width: 80px;
     padding: 0;
     opacity: 1;
