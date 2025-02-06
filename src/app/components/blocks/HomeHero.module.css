@@ -40,6 +40,15 @@
   list-style: none;
 }
 
+.hero_heading {
+  color: var(--main-color);
+  overflow: hidden;
+  z-index: -1;
+  margin: 0;
+  font-size: 14vw;
+  position: relative;
+}
+
 @media (max-width: 768px) {
   .home_hero_content {
     grid-template-columns: repeat(2, 1fr);
@@ -58,5 +67,9 @@
     grid-column: 1 / 3;
     grid-row: 1;
     text-align: center;
+  }
+
+  .hero_heading {
+    font-size: 10vw;
   }
 }

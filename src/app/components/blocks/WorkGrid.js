@@ -32,9 +32,9 @@ const WorkGrid = ({ videos, heading, button }) => {
             </article>
           ))}
         </div>
-        <Stack width="100%" justify="center" margin="-30vw 0 0 0">
+        <div className={styles.button_wrapper}>
           <Button transition className="step-1" href={button.url}>{button.title}</Button>
-        </Stack>
+        </div>
       </Container>
     </Section>
   );
