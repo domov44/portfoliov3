@@ -196,7 +196,7 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
         <Hero ref={heroRef}>
             <ImagesList images={images} />
             <Stack direction={"column"} width={"100%"} height={"calc(70vh - 80px)"} justify={"space-between"}>
-                <div ref={homeHeroContentRef} className={styles.home_hero_content}>  {/* Ajout du ref */}
+                <div ref={homeHeroContentRef} className={styles.home_hero_content}>
                     <div className={styles.home_hero_title}>
                         <Title level={6} className="text_align_center default">{centerText}</Title>
                     </div>
@@ -210,7 +210,7 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
                     </ul>
                 </div>
                 <Stack overflow={"hidden"} justify={"end"} width={"100%"}>
-                    <Title ref={titleRef} level={1} data_cy="name-surname" className="colored hidden font14vw zIndex_-1">
+                    <h1 ref={titleRef} data_cy="name-surname" className={styles.hero_heading +  " hidden"}>
                         {titleText.split('').map((letter, index) => (
                             <span
                                 key={index}
@@ -221,7 +221,7 @@ const HomeHero = ({ images, centerText, rightUrl, heading, leftUrl }) => {
                                 {letter === ' ' ? '\u00A0' : letter}
                             </span>
                         ))}
-                    </Title>
+                    </h1>
                 </Stack>
             </Stack>
         </Hero>

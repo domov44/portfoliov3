@@ -4,7 +4,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Stack from '../ui/wrapper/Stack';
 import Section from '../ui/wrapper/Section';
-import Container from '../ui/wrapper/Container';
 import Button from '../ui/button/Button';
 import Text from '../ui/textual/Text';
 import styles from "./ImageText.module.css";
@@ -123,13 +122,8 @@ const ImageText = ({ content }) => {
           </Title>
         </Stack>
       )}
-      <Container
-        direction={content.direction ? "row-reverse" : "row"}
-        width={"full"}
-        maxwidth={"xl"}
-        align={"center"}
-      >
-        <Stack width={"60%"} justify={"center"}>
+      <div className={styles.container + (content.direction ? " row-reverse" : " row")}>
+        <div className={styles.image_wrapper}>
           <div ref={parentBentoDivRef} className={styles.bentoParentDiv + ' ' + classCss}>
             <figure ref={bentoDivRef} className={styles.bentoDiv}>
               <img
@@ -137,9 +131,7 @@ const ImageText = ({ content }) => {
                 alt={content.image.node.altText}
                 className={styles.video}
               />
-              <Stack>
-                <Text>{content.link.title}</Text>
-              </Stack>
+              <Text>{content.link.title}</Text>
               {content.link && (
                 <InvisibleLink
                   lineheight={"0"}
@@ -149,8 +141,8 @@ const ImageText = ({ content }) => {
               )}
             </figure>
           </div>
-        </Stack>
-        <Stack direction={"column"} width={"40%"} spacing={"20px"}>
+        </div>
+        <div className={styles.content_wrapper}>
           <div className="flex directionColumn spacing_sm txt_group" dangerouslySetInnerHTML={{ __html: content.text }} />
           {content.button && (
             <Button
@@ -163,8 +155,8 @@ const ImageText = ({ content }) => {
               {content.button.title}
             </Button>
           )}
-        </Stack>
-      </Container>
+        </div>
+      </div>
     </Section>
   );
 };

@@ -1,0 +1,16 @@
+.matter_section {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-width: calc((100% - 30px));
+    padding: 100px 30px;
+}
+
+.matter_scene {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+}

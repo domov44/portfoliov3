@@ -3,8 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as Matter from 'matter-js';
 import Title from '../ui/textual/Title';
-import Section from '../ui/wrapper/Section';
-
+import styles from './Mattershapes.module.css'
 const MatterShapes = ({ images, heading }) => {
   const sceneRef = useRef(null);
 
@@ -17,7 +16,8 @@ const MatterShapes = ({ images, heading }) => {
     const world = engine.world;
 
     const width = sceneRef.current.offsetWidth;
-    const height = sceneRef.current.offsetHeight;
+    const height = window.innerHeight * 0.8;
+
     const render = Render.create({
       element: sceneRef.current,
       engine: engine,
@@ -34,37 +34,30 @@ const MatterShapes = ({ images, heading }) => {
     Runner.run(runner, engine);
 
     Composite.add(world, [
-      Bodies.rectangle(width / 2, 0, width, 50, { 
-        isStatic: true,
-        render: { visible: false },
-      }),
-      Bodies.rectangle(width / 2, height, width, 50, { 
-        isStatic: true,
-        render: { visible: true, fillStyle: '#1A1821' },
-      }),
-      Bodies.rectangle(width, height / 2, 50, height, { 
-        isStatic: true,
-        render: { visible: false },
-      }),
-      Bodies.rectangle(0, height / 2, 50, height, {
-        isStatic: true,
-        render: { visible: false },
-      }),
+      Bodies.rectangle(width / 2, -25, width, 50, { isStatic: true, render: { visible: false } }),
+      Bodies.rectangle(width / 2, height + 25, width, 50, { isStatic: true, render: { visible: false } }),
+      Bodies.rectangle(width + 25, height / 2, 50, height, { isStatic: true, render: { visible: false } }),
+      Bodies.rectangle(-25, height / 2, 50, height, { isStatic: true, render: { visible: false } }),
     ]);
 
-    const radius = 50;
+    const isMobile = window.innerWidth <= 768;
+    const radius = isMobile ? 25 : 50;
+    const cols = isMobile ? 3 : 6;
+    const spacingX = isMobile ? 50 : 120;
+    const spacingY = isMobile ? 30 : 120;
+    const offsetX = (width - cols * spacingX) / 2 + radius;
 
     images.forEach((imageSrc, index) => {
-      const x = 100 + (index % 6) * 120;
-      const y = 100 + Math.floor(index / 6) * 120;
+      const x = offsetX + (index % cols) * spacingX;
+      const y = 100 + Math.floor(index / cols) * spacingY;
 
       Composite.add(world, Bodies.circle(x, y, radius, {
         restitution: 0.4,
         render: {
           sprite: {
             texture: imageSrc,
-            xScale: radius / 200,
-            yScale: radius / 200,
+            xScale: (radius * 2) / 400,
+            yScale: (radius * 2) / 400,
           },
         },
       }));
@@ -97,10 +90,10 @@ const MatterShapes = ({ images, heading }) => {
   }, [images]);
 
   return (
-    <Section fullWidth>
-      {heading && <Title level={2} className="default">{heading}</Title>}
-      <div ref={sceneRef} style={{ width: '100%', height: '80vh', overflow: 'hidden' }} />
-    </Section>
+    <section className={styles.matter_section}>
+      {heading && <Title level={2} className="default text_align_center">{heading}</Title>}
+      <div className={styles.matter_scene} ref={sceneRef} />
+    </section>
   );
 };
 
