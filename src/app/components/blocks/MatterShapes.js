@@ -35,7 +35,10 @@ const MatterShapes = ({ images, heading }) => {
 
     Composite.add(world, [
       Bodies.rectangle(width / 2, -25, width, 50, { isStatic: true, render: { visible: false } }),
-      Bodies.rectangle(width / 2, height + 25, width, 50, { isStatic: true, render: { visible: false } }),
+      Bodies.rectangle(width / 2, height, width, 50, {
+        isStatic: true,
+        render: { visible: true, fillStyle: '#1A1821' },
+      }),
       Bodies.rectangle(width + 25, height / 2, 50, height, { isStatic: true, render: { visible: false } }),
       Bodies.rectangle(-25, height / 2, 50, height, { isStatic: true, render: { visible: false } }),
     ]);
