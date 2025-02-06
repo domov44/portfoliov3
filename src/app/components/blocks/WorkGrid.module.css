@@ -63,6 +63,13 @@
     grid-row: 2;
 }
 
+.button_wrapper{
+    margin:-30vw 0 0 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 768px) {
     .gridItem:nth-child(1),
     .gridItem:nth-child(2),
@@ -71,5 +78,13 @@
         grid-column: 1 / span 12;
         grid-row: auto;
         transform: none;
+    }
+
+    .button_wrapper{
+        margin:0;
+    }
+
+    .projectGrid{
+        padding: 20px;
     }
 }
