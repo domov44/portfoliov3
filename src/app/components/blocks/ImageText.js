@@ -122,7 +122,7 @@ const ImageText = ({ content }) => {
           </Title>
         </Stack>
       )}
-      <div className={styles.container + (content.direction ? " row-reverse" : " row")}>
+      <div className={styles.container + (content.direction ? " row-reverse" : " directionRow")}>
         <div className={styles.image_wrapper}>
           <div ref={parentBentoDivRef} className={styles.bentoParentDiv + ' ' + classCss}>
             <figure ref={bentoDivRef} className={styles.bentoDiv}>

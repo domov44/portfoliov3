@@ -110,6 +110,10 @@
   flex-direction: row;
 }
 
+.row-reverse {
+  flex-direction: row-reverse;
+}
+
 .directionColumn {
   flex-direction: column;
 }
