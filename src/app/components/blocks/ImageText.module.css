@@ -65,8 +65,16 @@
   justify-content: center;
 }
 
+.container_row_reverse{
+  flex-direction: row-reverse;
+}
+
+.container_row{
+  flex-direction: row;
+}
+
 @media (max-width: 768px) {
-  .container {
+  .container, .container_row, .container_row_reverse {
     flex-direction: column;
     max-width: 100%;
   }
