@@ -172,7 +172,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
     }, [galleryItems]);
 
     return (
-        <>
+        <section className={styles.section}>
             <ul ref={ulRef} className={styles.GalleryGridList}>
                 {galleryItems.map((gallery, index) => (
                     <li
@@ -203,7 +203,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
                     day: '2-digit'
                 }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3/$1/$2') : "Travel date"}</p>
             </div>
-        </>
+        </section>
     );
 };
 
