@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import styles from './ProjectsList.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import InvisibleLink from '../../ui/button/InvisibleLink';
@@ -8,22 +8,34 @@ import InvisibleLink from '../../ui/button/InvisibleLink';
 function ProjectsList({ worksElements }) {
     const sectionRef = useRef(null);
     const projectRowRef = useRef(null);
-    const [isClient, setIsClient] = useState(false);
+    const projectRefs = useRef([]);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
-        setIsClient(true);
     }, []);
 
-    useEffect(() => {
-        if (!isClient || !worksElements?.length) return;
-
+    const initializeRow = () => {
         const section = sectionRef.current;
         const projectRow = projectRowRef.current;
 
         if (!section || !projectRow) return;
 
-        const animation = gsap.to(projectRow, {
+        const articles = projectRefs.current;
+
+        articles.forEach((article, index) => {
+            gsap.fromTo(article,
+                { x: 200, autoAlpha: 0 },
+                {
+                    x: 0,
+                    autoAlpha: 1,
+                    duration: 1,
+                    ease: "power4.out",
+                    delay: index * 0.05
+                }
+            );
+        });
+
+        const scrollAnimation = gsap.to(projectRow, {
             x: () => -(projectRow.scrollWidth - window.innerWidth),
             ease: "none",
             scrollTrigger: {
@@ -38,24 +50,32 @@ function ProjectsList({ worksElements }) {
         });
 
         return () => {
-            animation.scrollTrigger?.kill();
-            animation.kill();
+            scrollAnimation.scrollTrigger?.kill();
+            scrollAnimation.kill();
         };
-    }, [worksElements, isClient]);
+    };
+
+    useEffect(() => {
+        initializeRow();
+    }, [worksElements]);
 
     return (
         <section ref={sectionRef} className={styles.Section}>
             {worksElements && worksElements.length > 0 ? (
                 <div ref={projectRowRef} className={styles.ProjectRow}>
-                    {worksElements.map((work) =>
+                    {worksElements.map((work, index) => (
                         work.videoUrl ? (
-                            <article key={work.id} className={styles.ProjectArticle}>
+                            <article
+                                key={work.id}
+                                ref={(el) => (projectRefs.current[index] = el)}
+                                className={styles.ProjectArticle}
+                            >
                                 <figure>
                                     <video
                                         className={styles.ProjectVideo}
                                         alt={work.name}
                                         src={work.videoUrl}
-                                        autoPlay={isClient}
+                                        autoPlay
                                         loop
                                         muted
                                         playsInline
@@ -70,7 +90,7 @@ function ProjectsList({ worksElements }) {
                                 </InvisibleLink>
                             </article>
                         ) : null
-                    )}
+                    ))}
                 </div>
             ) : (
                 <p>No worksElements found</p>
