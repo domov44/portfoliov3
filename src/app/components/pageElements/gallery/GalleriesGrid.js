@@ -6,11 +6,10 @@ import Image from 'next/image';
 
 const GalleriesGrid = ({ galleriesElements }) => {
     const [hoveredGallery, setHoveredGallery] = useState(null);
-    const [isInitialized, setIsInitialized] = useState(false);
     const ulRef = useRef(null);
-    const liRefs = useRef(Array(15).fill(null));
-    const pictureRefs = useRef(Array(15).fill(null));
-    const imgRefs = useRef(Array(15).fill(null));
+    const liRefs = useRef([]);
+    const pictureRefs = useRef([]);
+    const imgRefs = useRef([]);
 
     const galleryItems = useMemo(() => {
         if (galleriesElements.length >= 15) return galleriesElements;
@@ -32,17 +31,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
         return items;
     }, [galleriesElements]);
 
-    // Détection de Safari
-    const isSafari = useMemo(() => {
-        if (typeof window !== 'undefined') {
-            return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        }
-        return false;
-    }, []);
-
-    const initializeGallery = () => {
-        if (!ulRef.current || isInitialized) return;
-
+    useEffect(() => {
         const ulElement = ulRef.current;
         let viewportWidth = window.innerWidth;
         let viewportHeight = window.innerHeight;
@@ -59,30 +48,18 @@ const GalleriesGrid = ({ galleriesElements }) => {
         window.addEventListener("resize", updateDimensions);
 
         const animationConfig = {
-            duration: isSafari ? 0.8 : 1.2,
+            duration: 1.2,
             ease: "power4.out",
         };
 
         const mm = gsap.matchMedia();
 
         mm.add("(min-width: 768px)", () => {
-            // Initialiser les images après leur chargement
             imgRefs.current.forEach((img) => {
-                if (img) {
-                    img.onload = () => {
-                        gsap.set(img, {
-                            scale: 1.3,
-                            willChange: 'transform',
-                            backfaceVisibility: 'hidden',
-                            perspective: 1000
-                        });
-                    };
-                }
+                if (img) gsap.set(img, { scale: 1.3 });
             });
 
             const handleMouseMove = (e) => {
-                if (!ulElement) return;
-
                 const mouseXRatio = e.clientX / viewportWidth;
                 const mouseYRatio = e.clientY / viewportHeight;
 
@@ -91,46 +68,42 @@ const GalleriesGrid = ({ galleriesElements }) => {
                 const targetY = Math.min(0, Math.max(-(gridHeight - viewportHeight),
                     -(gridHeight - viewportHeight) * (mouseYRatio * 0.95)));
 
-                requestAnimationFrame(() => {
-                    gsap.to(ulElement, {
-                        x: targetX,
-                        y: targetY,
-                        ...animationConfig,
+                gsap.to(ulElement, {
+                    x: targetX,
+                    y: targetY,
+                    ...animationConfig,
+                    overwrite: true,
+                });
+
+                imgRefs.current.forEach((img) => {
+                    if (!img) return;
+                    const rect = img.getBoundingClientRect();
+                    const imgCenterX = rect.left + rect.width / 2;
+                    const imgCenterY = rect.top + rect.height / 2;
+
+                    const deltaX = (imgCenterX - viewportWidth / 2) / viewportWidth;
+                    const deltaY = (imgCenterY - viewportHeight / 2) / viewportHeight;
+
+                    gsap.to(img, {
+                        x: deltaX * -45,
+                        y: deltaY * -45,
                         overwrite: true,
-                    });
-
-                    imgRefs.current.forEach((img) => {
-                        if (!img) return;
-                        const rect = img.getBoundingClientRect();
-                        const imgCenterX = rect.left + rect.width / 2;
-                        const imgCenterY = rect.top + rect.height / 2;
-
-                        const deltaX = (imgCenterX - viewportWidth / 2) / viewportWidth;
-                        const deltaY = (imgCenterY - viewportHeight / 2) / viewportHeight;
-
-                        gsap.to(img, {
-                            x: deltaX * -45,
-                            y: deltaY * -45,
-                            overwrite: true,
-                            duration: isSafari ? 0.5 : 0.8,
-                            ease: "power4.out",
-                        });
+                        duration: 0.8,
+                        ease: "power4.out",
                     });
                 });
             };
 
-            const throttledHandleMouseMove = (() => {
-                let lastTime = 0;
-                const throttleDelay = isSafari ? 32 : 16;
+            let lastTime = 0;
+            const throttleDelay = 16;
 
-                return (e) => {
-                    const now = Date.now();
-                    if (now - lastTime >= throttleDelay) {
-                        handleMouseMove(e);
-                        lastTime = now;
-                    }
-                };
-            })();
+            const throttledHandleMouseMove = (e) => {
+                const now = Date.now();
+                if (now - lastTime >= throttleDelay) {
+                    handleMouseMove(e);
+                    lastTime = now;
+                }
+            };
 
             ulElement.addEventListener('mousemove', throttledHandleMouseMove);
 
@@ -140,22 +113,25 @@ const GalleriesGrid = ({ galleriesElements }) => {
         });
 
         mm.add("(max-width: 767px)", () => {
-            const cleanup = () => {
-                imgRefs.current.forEach((img) => {
-                    if (img) {
-                        gsap.killTweensOf(img);
-                        gsap.set(img, { clearProps: "all" });
-                    }
-                });
-
-                if (ulElement) {
-                    gsap.killTweensOf(ulElement);
-                    gsap.set(ulElement, { clearProps: "all" });
+            imgRefs.current.forEach((img) => {
+                if (img) {
+                    gsap.killTweensOf(img);
+                    gsap.set(img, { clearProps: "all" });
                 }
-            };
+            });
 
-            cleanup();
-            return cleanup;
+            if (ulElement) {
+                gsap.killTweensOf(ulElement)
+                gsap.set(ulElement, { clearProps: "all" });
+            }
+
+            liRefs.current.forEach((li, index) => {
+                const picture = pictureRefs.current[index];
+                if (picture) {
+                    gsap.killTweensOf(picture);
+                    gsap.set(picture, { clearProps: "all" });
+                }
+            });
         });
 
         liRefs.current.forEach((li, index) => {
@@ -178,7 +154,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
                     gsap.killTweensOf(picture);
                     gsap.to(picture, {
                         scale: 1.08,
-                        duration: isSafari ? 1.2 : 1.8,
+                        duration: 1.8,
                         ease: "power4.out",
                     });
                 }
@@ -190,14 +166,12 @@ const GalleriesGrid = ({ galleriesElements }) => {
                     const x = e.clientX - left - width / 2;
                     const y = e.clientY - top - height / 2;
 
-                    requestAnimationFrame(() => {
-                        gsap.to(picture, {
-                            x: initialPosition.x + x * 0.15,
-                            y: initialPosition.y + y * 0.15,
-                            rotation: initialPosition.rotation,
-                            duration: isSafari ? 1.2 : 1.8,
-                            ease: "power4.out",
-                        });
+                    gsap.to(picture, {
+                        x: initialPosition.x + x * 0.15,
+                        y: initialPosition.y + y * 0.15,
+                        rotation: initialPosition.rotation,
+                        duration: 1.8,
+                        ease: "power4.out",
                     });
                 }
             };
@@ -212,7 +186,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
                         y: initialPosition.y,
                         rotation: initialPosition.rotation,
                         scale: 1,
-                        duration: isSafari ? 1.2 : 1.8,
+                        duration: 1.8,
                         ease: "power4.out",
                     });
                 }
@@ -229,16 +203,10 @@ const GalleriesGrid = ({ galleriesElements }) => {
             };
         });
 
-        setIsInitialized(true);
-
         return () => {
             window.removeEventListener("resize", updateDimensions);
             mm.revert();
         };
-    };
-
-    useEffect(() => {
-        initializeGallery();
     }, [galleryItems]);
 
     return (
@@ -258,8 +226,6 @@ const GalleriesGrid = ({ galleriesElements }) => {
                                 className={styles.GalleryImage}
                                 width={800}
                                 height={800}
-                                loading="eager"
-                                priority={index < 5}
                             />
                         </picture>
                     </li>
