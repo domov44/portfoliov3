@@ -14,12 +14,12 @@ const GalleriesGrid = ({ galleriesElements }) => {
 
     const galleryItems = useMemo(() => {
         if (galleriesElements.length >= 15) return galleriesElements;
-        
+
         const items = [...galleriesElements];
         while (items.length < 15) {
             const randomIndex = Math.floor(Math.random() * galleriesElements.length);
             const originalGallery = galleriesElements[randomIndex];
-            
+
             items.push({
                 ...originalGallery,
                 id: `${originalGallery.id}-duplicate-${items.length}`,
@@ -34,7 +34,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
 
     const initializeGallery = () => {
         if (!ulRef.current || isInitialized) return;
-        
+
         const ulElement = ulRef.current;
         let viewportWidth = window.innerWidth;
         let viewportHeight = window.innerHeight;
@@ -58,23 +58,13 @@ const GalleriesGrid = ({ galleriesElements }) => {
         const mm = gsap.matchMedia();
 
         mm.add("(min-width: 768px)", () => {
-            // Initialiser les images après leur chargement
             imgRefs.current.forEach((img) => {
-                if (img) {
-                    img.onload = () => {
-                        gsap.set(img, { 
-                            scale: 1.3,
-                            willChange: 'transform',
-                            backfaceVisibility: 'hidden',
-                            perspective: 1000
-                        });
-                    };
-                }
+                if (img) gsap.set(img, { scale: 1.3 });
             });
 
             const handleMouseMove = (e) => {
                 if (!ulElement) return;
-                
+
                 const mouseXRatio = e.clientX / viewportWidth;
                 const mouseYRatio = e.clientY / viewportHeight;
 
