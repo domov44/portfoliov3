@@ -6,19 +6,20 @@ import Image from 'next/image';
 
 const GalleriesGrid = ({ galleriesElements }) => {
     const [hoveredGallery, setHoveredGallery] = useState(null);
+    const [isInitialized, setIsInitialized] = useState(false);
     const ulRef = useRef(null);
-    const liRefs = useRef([]);
-    const pictureRefs = useRef([]);
-    const imgRefs = useRef([]);
+    const liRefs = useRef(Array(15).fill(null));
+    const pictureRefs = useRef(Array(15).fill(null));
+    const imgRefs = useRef(Array(15).fill(null));
 
     const galleryItems = useMemo(() => {
         if (galleriesElements.length >= 15) return galleriesElements;
-
+        
         const items = [...galleriesElements];
         while (items.length < 15) {
             const randomIndex = Math.floor(Math.random() * galleriesElements.length);
             const originalGallery = galleriesElements[randomIndex];
-
+            
             items.push({
                 ...originalGallery,
                 id: `${originalGallery.id}-duplicate-${items.length}`,
@@ -31,7 +32,9 @@ const GalleriesGrid = ({ galleriesElements }) => {
         return items;
     }, [galleriesElements]);
 
-    useEffect(() => {
+    const initializeGallery = () => {
+        if (!ulRef.current || isInitialized) return;
+        
         const ulElement = ulRef.current;
         let viewportWidth = window.innerWidth;
         let viewportHeight = window.innerHeight;
@@ -55,11 +58,23 @@ const GalleriesGrid = ({ galleriesElements }) => {
         const mm = gsap.matchMedia();
 
         mm.add("(min-width: 768px)", () => {
+            // Initialiser les images après leur chargement
             imgRefs.current.forEach((img) => {
-                if (img) gsap.set(img, { scale: 1.3 });
+                if (img) {
+                    img.onload = () => {
+                        gsap.set(img, { 
+                            scale: 1.3,
+                            willChange: 'transform',
+                            backfaceVisibility: 'hidden',
+                            perspective: 1000
+                        });
+                    };
+                }
             });
 
             const handleMouseMove = (e) => {
+                if (!ulElement) return;
+                
                 const mouseXRatio = e.clientX / viewportWidth;
                 const mouseYRatio = e.clientY / viewportHeight;
 
@@ -68,42 +83,46 @@ const GalleriesGrid = ({ galleriesElements }) => {
                 const targetY = Math.min(0, Math.max(-(gridHeight - viewportHeight),
                     -(gridHeight - viewportHeight) * (mouseYRatio * 0.95)));
 
-                gsap.to(ulElement, {
-                    x: targetX,
-                    y: targetY,
-                    ...animationConfig,
-                    overwrite: true,
-                });
-
-                imgRefs.current.forEach((img) => {
-                    if (!img) return;
-                    const rect = img.getBoundingClientRect();
-                    const imgCenterX = rect.left + rect.width / 2;
-                    const imgCenterY = rect.top + rect.height / 2;
-
-                    const deltaX = (imgCenterX - viewportWidth / 2) / viewportWidth;
-                    const deltaY = (imgCenterY - viewportHeight / 2) / viewportHeight;
-
-                    gsap.to(img, {
-                        x: deltaX * -45,
-                        y: deltaY * -45,
+                requestAnimationFrame(() => {
+                    gsap.to(ulElement, {
+                        x: targetX,
+                        y: targetY,
+                        ...animationConfig,
                         overwrite: true,
-                        duration: 0.8,
-                        ease: "power4.out",
+                    });
+
+                    imgRefs.current.forEach((img) => {
+                        if (!img) return;
+                        const rect = img.getBoundingClientRect();
+                        const imgCenterX = rect.left + rect.width / 2;
+                        const imgCenterY = rect.top + rect.height / 2;
+
+                        const deltaX = (imgCenterX - viewportWidth / 2) / viewportWidth;
+                        const deltaY = (imgCenterY - viewportHeight / 2) / viewportHeight;
+
+                        gsap.to(img, {
+                            x: deltaX * -45,
+                            y: deltaY * -45,
+                            overwrite: true,
+                            duration: 0.8,
+                            ease: "power4.out",
+                        });
                     });
                 });
             };
 
-            let lastTime = 0;
-            const throttleDelay = 16;
+            const throttledHandleMouseMove = (() => {
+                let lastTime = 0;
+                const throttleDelay = 16;
 
-            const throttledHandleMouseMove = (e) => {
-                const now = Date.now();
-                if (now - lastTime >= throttleDelay) {
-                    handleMouseMove(e);
-                    lastTime = now;
-                }
-            };
+                return (e) => {
+                    const now = Date.now();
+                    if (now - lastTime >= throttleDelay) {
+                        handleMouseMove(e);
+                        lastTime = now;
+                    }
+                };
+            })();
 
             ulElement.addEventListener('mousemove', throttledHandleMouseMove);
 
@@ -113,25 +132,22 @@ const GalleriesGrid = ({ galleriesElements }) => {
         });
 
         mm.add("(max-width: 767px)", () => {
-            imgRefs.current.forEach((img) => {
-                if (img) {
-                    gsap.killTweensOf(img);
-                    gsap.set(img, { clearProps: "all" });
-                }
-            });
+            const cleanup = () => {
+                imgRefs.current.forEach((img) => {
+                    if (img) {
+                        gsap.killTweensOf(img);
+                        gsap.set(img, { clearProps: "all" });
+                    }
+                });
 
-            if (ulElement) {
-                gsap.killTweensOf(ulElement)
-                gsap.set(ulElement, { clearProps: "all" });
-            }
-
-            liRefs.current.forEach((li, index) => {
-                const picture = pictureRefs.current[index];
-                if (picture) {
-                    gsap.killTweensOf(picture);
-                    gsap.set(picture, { clearProps: "all" });
+                if (ulElement) {
+                    gsap.killTweensOf(ulElement);
+                    gsap.set(ulElement, { clearProps: "all" });
                 }
-            });
+            };
+
+            cleanup();
+            return cleanup;
         });
 
         liRefs.current.forEach((li, index) => {
@@ -166,12 +182,14 @@ const GalleriesGrid = ({ galleriesElements }) => {
                     const x = e.clientX - left - width / 2;
                     const y = e.clientY - top - height / 2;
 
-                    gsap.to(picture, {
-                        x: initialPosition.x + x * 0.15,
-                        y: initialPosition.y + y * 0.15,
-                        rotation: initialPosition.rotation,
-                        duration: 1.8,
-                        ease: "power4.out",
+                    requestAnimationFrame(() => {
+                        gsap.to(picture, {
+                            x: initialPosition.x + x * 0.15,
+                            y: initialPosition.y + y * 0.15,
+                            rotation: initialPosition.rotation,
+                            duration: 1.8,
+                            ease: "power4.out",
+                        });
                     });
                 }
             };
@@ -203,10 +221,16 @@ const GalleriesGrid = ({ galleriesElements }) => {
             };
         });
 
+        setIsInitialized(true);
+
         return () => {
             window.removeEventListener("resize", updateDimensions);
             mm.revert();
         };
+    };
+
+    useEffect(() => {
+        initializeGallery();
     }, [galleryItems]);
 
     return (
@@ -226,6 +250,8 @@ const GalleriesGrid = ({ galleriesElements }) => {
                                 className={styles.GalleryImage}
                                 width={800}
                                 height={800}
+                                loading="eager"
+                                priority={index < 5}
                             />
                         </picture>
                     </li>

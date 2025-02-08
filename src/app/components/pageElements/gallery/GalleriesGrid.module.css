@@ -1,8 +1,8 @@
-.section {
+.section{
     height: 100vh;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items:flex-start;
     overflow: hidden;
     max-width: 100%;
     width: 100%;
@@ -20,8 +20,6 @@
     width: fit-content;
     height: auto;
     will-change: transform;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
 }
 
 .GalleryGridListItem {
@@ -46,12 +44,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    perspective: 1000;
-    -webkit-perspective: 1000;
 }
 
 .GalleryGridListItem:hover .GalleryPicture {
@@ -81,7 +73,7 @@
 
 @media (max-width: 768px) {
 
-    .section {
+    .section{
         height: auto;
         padding-top: 150px;
     }
