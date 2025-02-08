@@ -62,3 +62,30 @@
     border-radius: 10px;
     object-fit: cover;
 }
+
+@media (max-width: 768px) {
+
+    .Section {
+        overflow: visible;
+        max-width: 100%;
+        padding: 100px 0;
+        gap: 10px;
+        margin: 0 auto;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .ProjectRow {
+        flex-direction: column;
+        position:relative;
+        top: 0%;
+        transform: translateY(0%);
+    }
+
+    .ProjectArticle {
+        width: 100%;
+    }
+}

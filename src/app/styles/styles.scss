@@ -5,7 +5,7 @@ body {
     font-family: var(--text-font-cashdisplay);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .txt_group {

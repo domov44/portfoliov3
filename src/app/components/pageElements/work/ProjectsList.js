@@ -1,6 +1,6 @@
 "use client";
 import styles from './ProjectsList.module.css';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import InvisibleLink from '../../ui/button/InvisibleLink';
@@ -12,51 +12,84 @@ function ProjectsList({ worksElements }) {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
-    }, []);
 
-    const initializeRow = () => {
-        const section = sectionRef.current;
-        const projectRow = projectRowRef.current;
+        const mm = gsap.matchMedia();
 
-        if (!section || !projectRow) return;
+        mm.add("(min-width: 768px)", () => {
+            const section = sectionRef.current;
+            const projectRow = projectRowRef.current;
 
-        const articles = projectRefs.current;
+            if (!section || !projectRow) return;
 
-        articles.forEach((article, index) => {
-            gsap.fromTo(article,
-                { x: 200, autoAlpha: 0 },
-                {
-                    x: 0,
-                    autoAlpha: 1,
-                    duration: 1,
-                    ease: "power4.out",
-                    delay: index * 0.05
+            const articles = projectRefs.current;
+
+            articles.forEach((article, index) => {
+                gsap.fromTo(article,
+                    { x: 200, autoAlpha: 0 },
+                    {
+                        x: 0,
+                        autoAlpha: 1,
+                        duration: 1,
+                        ease: "power4.out",
+                        delay: index * 0.05
+                    }
+                );
+            });
+
+            const scrollAnimation = gsap.to(projectRow, {
+                x: () => -(projectRow.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",
+                    end: () => `+=${projectRow.scrollWidth - window.innerWidth}`,
+                    pin: true,
+                    scrub: 1,
+                    invalidateOnRefresh: true,
+                    pinSpacing: true
                 }
-            );
+            });
+
+            return () => {
+                scrollAnimation.scrollTrigger?.kill();
+                scrollAnimation.kill();
+            };
         });
 
-        const scrollAnimation = gsap.to(projectRow, {
-            x: () => -(projectRow.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                end: () => `+=${projectRow.scrollWidth - window.innerWidth}`,
-                pin: true,
-                scrub: 1,
-                invalidateOnRefresh: true,
-                pinSpacing: true
+        mm.add("(max-width: 767px)", () => {
+            const articles = projectRefs.current;
+
+            articles.forEach((article, index) => {
+                gsap.fromTo(article,
+                    { x: 200, autoAlpha: 0 },
+                    {
+                        x: 0,
+                        autoAlpha: 1,
+                        duration: 1,
+                        ease: "power4.out",
+                        delay: index * 0.05
+                    }
+                );
+            });
+
+            const projectRow = projectRowRef.current;
+
+            if (projectRow) {
+                gsap.killTweensOf(projectRow);
+                gsap.set(projectRow, { clearProps: "all" });
             }
+
+            return () => {
+                if (projectRow) {
+                    gsap.killTweensOf(projectRow);
+                    gsap.set(projectRow, { clearProps: "all" });
+                }
+            };
         });
 
         return () => {
-            scrollAnimation.scrollTrigger?.kill();
-            scrollAnimation.kill();
+            mm.revert();
         };
-    };
-
-    useEffect(() => {
-        initializeRow();
     }, [worksElements]);
 
     return (
