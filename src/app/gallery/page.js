@@ -2,7 +2,6 @@
 import GalleriesGrid from '../components/pageElements/gallery/GalleriesGrid';
 import { getAllGalleries } from '../lib/requests/gallery';
 import MainContent from "../layouts/MainContent";
-import Section from '../components/ui/wrapper/Section';
 
 export default async function Page() {
     let galleriesElements = [];
@@ -43,9 +42,7 @@ export default async function Page() {
 
     return (
         <MainContent>
-            <Section className="align_start h100vh justify_start space-0" fullWidth>
-                <GalleriesGrid galleriesElements={galleriesElements} />
-            </Section>
+            <GalleriesGrid galleriesElements={galleriesElements} />
         </MainContent>
     );
 }
