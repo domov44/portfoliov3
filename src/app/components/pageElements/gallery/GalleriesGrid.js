@@ -52,57 +52,87 @@ const GalleriesGrid = ({ galleriesElements }) => {
             ease: "power4.out",
         };
 
-        imgRefs.current.forEach((img) => {
-            if (img) gsap.set(img, { scale: 1.3 });
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 768px)", () => {
+            imgRefs.current.forEach((img) => {
+                if (img) gsap.set(img, { scale: 1.3 });
+            });
+
+            const handleMouseMove = (e) => {
+                const mouseXRatio = e.clientX / viewportWidth;
+                const mouseYRatio = e.clientY / viewportHeight;
+
+                const targetX = Math.min(0, Math.max(-(gridWidth - viewportWidth),
+                    -(gridWidth - viewportWidth) * (mouseXRatio * 0.95)));
+                const targetY = Math.min(0, Math.max(-(gridHeight - viewportHeight),
+                    -(gridHeight - viewportHeight) * (mouseYRatio * 0.95)));
+
+                gsap.to(ulElement, {
+                    x: targetX,
+                    y: targetY,
+                    ...animationConfig,
+                    overwrite: true,
+                });
+
+                imgRefs.current.forEach((img) => {
+                    if (!img) return;
+                    const rect = img.getBoundingClientRect();
+                    const imgCenterX = rect.left + rect.width / 2;
+                    const imgCenterY = rect.top + rect.height / 2;
+
+                    const deltaX = (imgCenterX - viewportWidth / 2) / viewportWidth;
+                    const deltaY = (imgCenterY - viewportHeight / 2) / viewportHeight;
+
+                    gsap.to(img, {
+                        x: deltaX * -45,
+                        y: deltaY * -45,
+                        overwrite: true,
+                        duration: 0.8,
+                        ease: "power4.out",
+                    });
+                });
+            };
+
+            let lastTime = 0;
+            const throttleDelay = 16;
+
+            const throttledHandleMouseMove = (e) => {
+                const now = Date.now();
+                if (now - lastTime >= throttleDelay) {
+                    handleMouseMove(e);
+                    lastTime = now;
+                }
+            };
+
+            ulElement.addEventListener('mousemove', throttledHandleMouseMove);
+
+            return () => {
+                ulElement.removeEventListener('mousemove', throttledHandleMouseMove);
+            };
         });
 
-        const handleMouseMove = (e) => {
-            const mouseXRatio = e.clientX / viewportWidth;
-            const mouseYRatio = e.clientY / viewportHeight;
-
-            const targetX = Math.min(0, Math.max(-(gridWidth - viewportWidth),
-                -(gridWidth - viewportWidth) * (mouseXRatio * 0.95)));
-            const targetY = Math.min(0, Math.max(-(gridHeight - viewportHeight),
-                -(gridHeight - viewportHeight) * (mouseYRatio * 0.95)));
-
-            gsap.to(ulElement, {
-                x: targetX,
-                y: targetY,
-                ...animationConfig,
-                overwrite: true,
-            });
-
+        mm.add("(max-width: 767px)", () => {
             imgRefs.current.forEach((img) => {
-                if (!img) return;
-                const rect = img.getBoundingClientRect();
-                const imgCenterX = rect.left + rect.width / 2;
-                const imgCenterY = rect.top + rect.height / 2;
-
-                const deltaX = (imgCenterX - viewportWidth / 2) / viewportWidth;
-                const deltaY = (imgCenterY - viewportHeight / 2) / viewportHeight;
-
-                gsap.to(img, {
-                    x: deltaX * -45,
-                    y: deltaY * -45,
-                    overwrite: true,
-                    duration: 0.8,
-                    ease: "power4.out",
-                });
+                if (img) {
+                    gsap.killTweensOf(img);
+                    gsap.set(img, { clearProps: "all" });
+                }
             });
-        };
 
-        let lastTime = 0;
-        const throttleDelay = 16;
-
-        const throttledHandleMouseMove = (e) => {
-            const now = Date.now();
-            if (now - lastTime >= throttleDelay) {
-                handleMouseMove(e);
-                lastTime = now;
+            if (ulElement) {
+                gsap.killTweensOf(ulElement)
+                gsap.set(ulElement, { clearProps: "all" });
             }
-        };
 
-        ulElement.addEventListener('mousemove', throttledHandleMouseMove);
+            liRefs.current.forEach((li, index) => {
+                const picture = pictureRefs.current[index];
+                if (picture) {
+                    gsap.killTweensOf(picture);
+                    gsap.set(picture, { clearProps: "all" });
+                }
+            });
+        });
 
         liRefs.current.forEach((li, index) => {
             if (!li) return;
@@ -119,39 +149,47 @@ const GalleriesGrid = ({ galleriesElements }) => {
                     place: galleryData.place,
                     date: galleryData.date
                 });
-                gsap.killTweensOf(picture);
-                gsap.to(picture, {
-                    scale: 1.08,
-                    duration: 1.8,
-                    ease: "power4.out",
-                });
+
+                if (window.innerWidth >= 768) {
+                    gsap.killTweensOf(picture);
+                    gsap.to(picture, {
+                        scale: 1.08,
+                        duration: 1.8,
+                        ease: "power4.out",
+                    });
+                }
             };
 
             const handleLiMouseMove = (e) => {
-                const { width, height, top, left } = li.getBoundingClientRect();
-                const x = e.clientX - left - width / 2;
-                const y = e.clientY - top - height / 2;
+                if (window.innerWidth >= 768) {
+                    const { width, height, top, left } = li.getBoundingClientRect();
+                    const x = e.clientX - left - width / 2;
+                    const y = e.clientY - top - height / 2;
 
-                gsap.to(picture, {
-                    x: initialPosition.x + x * 0.15,
-                    y: initialPosition.y + y * 0.15,
-                    rotation: initialPosition.rotation,
-                    duration: 1.8,
-                    ease: "power4.out",
-                });
+                    gsap.to(picture, {
+                        x: initialPosition.x + x * 0.15,
+                        y: initialPosition.y + y * 0.15,
+                        rotation: initialPosition.rotation,
+                        duration: 1.8,
+                        ease: "power4.out",
+                    });
+                }
             };
 
             const handleLiMouseLeave = () => {
                 setHoveredGallery(null);
-                gsap.killTweensOf(picture);
-                gsap.to(picture, {
-                    x: initialPosition.x,
-                    y: initialPosition.y,
-                    rotation: initialPosition.rotation,
-                    scale: 1,
-                    duration: 1.8,
-                    ease: "power4.out",
-                });
+
+                if (window.innerWidth >= 768) {
+                    gsap.killTweensOf(picture);
+                    gsap.to(picture, {
+                        x: initialPosition.x,
+                        y: initialPosition.y,
+                        rotation: initialPosition.rotation,
+                        scale: 1,
+                        duration: 1.8,
+                        ease: "power4.out",
+                    });
+                }
             };
 
             li.addEventListener('mouseenter', handleLiMouseEnter);
@@ -166,8 +204,8 @@ const GalleriesGrid = ({ galleriesElements }) => {
         });
 
         return () => {
-            ulElement.removeEventListener('mousemove', throttledHandleMouseMove);
             window.removeEventListener("resize", updateDimensions);
+            mm.revert();
         };
     }, [galleryItems]);
 
