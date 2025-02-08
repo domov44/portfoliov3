@@ -2,6 +2,7 @@
 import GalleriesGrid from '../components/pageElements/gallery/GalleriesGrid';
 import { getAllGalleries } from '../lib/requests/gallery';
 import MainContent from "../layouts/MainContent";
+import Test from '../components/test/Test';
 
 export default async function Page() {
     let galleriesElements = [];
@@ -42,7 +43,7 @@ export default async function Page() {
 
     return (
         <MainContent>
-            <GalleriesGrid galleriesElements={galleriesElements} />
+            <Test galleriesElements={galleriesElements} />
         </MainContent>
     );
 }
