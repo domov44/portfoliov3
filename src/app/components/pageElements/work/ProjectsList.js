@@ -56,6 +56,33 @@ function ProjectsList({ worksElements }) {
             };
         });
 
+        mm.add("(max-width: 767px)", () => {
+            const articles = projectRefs.current;
+            const projectRow = projectRowRef.current;
+
+            if (projectRow) {
+                gsap.killTweensOf(projectRow);
+                gsap.set(projectRow, { clearProps: "all" });
+            }
+
+            if (articles) {
+                gsap.killTweensOf(articles);
+                gsap.set(articles, { clearProps: "all" });
+            }
+
+            return () => {
+                if (projectRow) {
+                    gsap.killTweensOf(projectRow);
+                    gsap.set(projectRow, { clearProps: "all" });
+                }
+
+                if (articles) {
+                    gsap.killTweensOf(articles);
+                    gsap.set(articles, { clearProps: "all" });
+                }
+            };
+        });
+
         return () => {
             mm.revert();
         };
