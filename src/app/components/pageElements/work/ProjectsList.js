@@ -25,7 +25,7 @@ function ProjectsList({ worksElements }) {
 
             articles.forEach((article, index) => {
                 gsap.fromTo(article,
-                    { x: 200, autoAlpha: 0 },
+                    { x: 500, autoAlpha: 0 },
                     {
                         x: 0,
                         autoAlpha: 1,
