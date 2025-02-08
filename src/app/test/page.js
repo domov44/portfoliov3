@@ -1,6 +1,7 @@
 import { getAllGalleries } from '../lib/requests/gallery';
 import MainContent from '../layouts/MainContent';
 import Image from 'next/image';
+import styles from './page.module.css'
 
 export default async function Page() {
     let galleriesElements = [];
@@ -41,25 +42,27 @@ export default async function Page() {
 
     return (
         <MainContent>
-            <ul className="grid grid-cols-3 gap-4 p-4">
-                {galleriesElements.map(gallery => (
-                    <li key={gallery.id}>
-                        <picture className="border rounded-lg overflow-hidden shadow-md">
-                            <Image
-                                src={gallery.url}
-                                alt={gallery.alt}
-                                width={300}
-                                height={200}
-                                className="w-full h-auto object-cover"
-                            />
-                            <div className="p-2">
-                                <p className="font-bold">{gallery.place}</p>
-                                <p className="text-sm text-gray-500">{gallery.date}</p>
-                            </div>
-                        </picture>
-                    </li>
-                ))}
-            </ul>
+            <section className={styles.section}>
+                <ul className={styles.GalleryGridList}>
+                    {galleriesElements.map(gallery => (
+                        <li key={gallery.id} className={styles.GalleryGridListItem}>
+                            <picture className={styles.GalleryPicture}>
+                                <Image
+                                    src={gallery.url}
+                                    alt={gallery.alt}
+                                    width={300}
+                                    height={200}
+                                    className={styles.GalleryImage}
+                                />
+                                <div className="p-2">
+                                    <p className="font-bold">{gallery.place}</p>
+                                    <p className="text-sm text-gray-500">{gallery.date}</p>
+                                </div>
+                            </picture>
+                        </li>
+                    ))}
+                </ul>
+            </section>
         </MainContent>
     );
 }
