@@ -1,3 +1,5 @@
+"use client"
+
 import { getAllGalleries } from '../lib/requests/gallery';
 import MainContent from '../layouts/MainContent';
 import Image from 'next/image';
