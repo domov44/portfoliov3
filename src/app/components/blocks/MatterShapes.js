@@ -45,9 +45,9 @@ const MatterShapes = ({ images, heading }) => {
 
     const isMobile = window.innerWidth <= 768;
     const radius = isMobile ? 25 : 50;
-    const cols = isMobile ? 3 : 6;
-    const spacingX = isMobile ? 50 : 120;
-    const spacingY = isMobile ? 30 : 120;
+    const cols = isMobile ? 3 : 7;
+    const spacingX = isMobile ? 50 : 80;
+    const spacingY = isMobile ? 30 : 80;
     const offsetX = (width - cols * spacingX) / 2 + radius;
 
     images.forEach((imageSrc, index) => {
