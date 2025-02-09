@@ -24,16 +24,18 @@ function ProjectsList({ worksElements }) {
             const articles = projectRefs.current;
 
             articles.forEach((article, index) => {
-                gsap.fromTo(article,
-                    { x: 500, autoAlpha: 0 },
-                    {
-                        x: 0,
-                        autoAlpha: 1,
-                        duration: 1,
-                        ease: "power4.out",
-                        delay: index * 0.05
-                    }
-                );
+                if (index < 3) {
+                    gsap.fromTo(article,
+                        { x: 500, autoAlpha: 0 },
+                        {
+                            x: 0,
+                            autoAlpha: 1,
+                            duration: 1,
+                            ease: "power4.out",
+                            delay: index * 0.05
+                        }
+                    );
+                }
             });
 
             const scrollAnimation = gsap.to(projectRow, {
