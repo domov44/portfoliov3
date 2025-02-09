@@ -25,12 +25,12 @@ function ProjectsList({ worksElements }) {
 
             articles.forEach((article, index) => {
                 if (index < 3) {
+                    article.style.opacity = 1;
                     gsap.fromTo(article,
-                        { x: 500, autoAlpha: 0 },
+                        { x: 800 },
                         {
                             x: 0,
-                            autoAlpha: 1,
-                            duration: 1,
+                            duration: 2,
                             ease: "power4.out",
                             delay: index * 0.05
                         }
@@ -90,6 +90,32 @@ function ProjectsList({ worksElements }) {
         };
     }, [worksElements]);
 
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    const videoUrl = video.getAttribute('data-src');
+                    video.src = videoUrl;
+                    observer.unobserve(video);
+                }
+            });
+        }, {
+            rootMargin: '200px',
+        });
+
+        projectRefs.current.forEach((article) => {
+            const video = article.querySelector('video');
+            if (video) {
+                observer.observe(video);
+            }
+        });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [worksElements]);
+
     return (
         <section ref={sectionRef} className={styles.Section}>
             {worksElements && worksElements.length > 0 ? (
@@ -105,7 +131,7 @@ function ProjectsList({ worksElements }) {
                                     <video
                                         className={styles.ProjectVideo}
                                         alt={work.name}
-                                        src={work.videoUrl}
+                                        data-src={work.videoUrl}
                                         autoPlay
                                         loop
                                         muted
