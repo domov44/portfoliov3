@@ -62,25 +62,29 @@ function ProjectsList({ worksElements }) {
             const articles = projectRefs.current;
             const projectRow = projectRowRef.current;
 
-            if (projectRow) {
-                gsap.killTweensOf(projectRow);
-                gsap.set(projectRow, { clearProps: "all" });
+            if (projectRowRef.current) {
+                gsap.killTweensOf(projectRowRef.current);
+                gsap.set(projectRowRef.current, { clearProps: "all" });
             }
 
-            if (articles) {
-                gsap.killTweensOf(articles);
-                gsap.set(articles, { clearProps: "all" });
+            if (projectRefs.current && projectRefs.current.length) {
+                projectRefs.current.forEach((article) => {
+                    gsap.killTweensOf(article);
+                    gsap.set(article, { clearProps: "all" });
+                });
             }
 
             return () => {
-                if (projectRow) {
-                    gsap.killTweensOf(projectRow);
-                    gsap.set(projectRow, { clearProps: "all" });
+                if (projectRowRef.current) {
+                    gsap.killTweensOf(projectRowRef.current);
+                    gsap.set(projectRowRef.current, { clearProps: "all" });
                 }
 
-                if (articles) {
-                    gsap.killTweensOf(articles);
-                    gsap.set(articles, { clearProps: "all" });
+                if (projectRefs.current && projectRefs.current.length) {
+                    projectRefs.current.forEach((article) => {
+                        gsap.killTweensOf(article);
+                        gsap.set(article, { clearProps: "all" });
+                    });
                 }
             };
         });
