@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Section from '../../../ui/wrapper/Section';
 import styles from './SingleDoubleSection.module.css';
 
 
@@ -34,7 +33,7 @@ function SingleDoubleSection({ left_image, right_image }) {
     }, []);
 
     return (
-        <Section className="h80vh defaultPadding align_center" ref={sectionRef}>
+        <section className={styles.section} ref={sectionRef}>
             <div className={styles.wrapper_single}>
                 {[left_image, right_image].map((image, index) => (
                     <div key={index} className={styles.stack_single}>
@@ -51,7 +50,7 @@ function SingleDoubleSection({ left_image, right_image }) {
                     </div>
                 ))}
             </div>
-        </Section>
+        </section>
     );
 }
 

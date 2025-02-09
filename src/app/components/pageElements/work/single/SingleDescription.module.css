@@ -1,0 +1,21 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    max-width: calc((100% - 30px));
+    margin: 0 auto;
+    padding: 100px 30px;
+}
+
+.description_wrapper{
+    max-width: 35vw;
+}
+
+@media (max-width: 768px) {
+    .description_wrapper {
+        max-width: 100%;
+    }
+}

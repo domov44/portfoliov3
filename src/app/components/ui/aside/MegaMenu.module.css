@@ -46,6 +46,7 @@
 @media (max-width: 768px) {
     .menu_social {
         flex-direction: column;
+        gap: 10px;
     }
 }
 

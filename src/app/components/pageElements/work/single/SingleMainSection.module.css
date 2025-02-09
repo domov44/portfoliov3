@@ -16,3 +16,26 @@
     background: black;
     z-index: -1;
 }
+
+.section {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px;
+    width: 100%;
+    overflow: hidden;
+    max-width: calc((100% - 30px));
+    margin: 0 auto;
+}
+
+
+@media (max-width: 768px) {
+    .image_section {
+        width: 100%;
+    }
+
+    .section{
+        height: 100%;
+    }
+}
