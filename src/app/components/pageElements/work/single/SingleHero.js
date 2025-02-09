@@ -6,6 +6,7 @@ import Title from '../../../ui/textual/Title';
 import Section from '../../../ui/wrapper/Section';
 import Stack from '../../../ui/wrapper/Stack';
 import { PiGithubLogoFill } from 'react-icons/pi';
+import styles from './SingleHero.module.css'
 
 function SingleHero({ title, href, github, role, context, date, category }) {
 
@@ -20,7 +21,7 @@ function SingleHero({ title, href, github, role, context, date, category }) {
                         </Title>
                     </Stack>
                     {(href && href !== '' || github && github !== '') && (
-                        <Stack>
+                        <div className={styles.button_wrapper}>
                             {(href && href !== '') && (
                                 <Button variant="primary" href={href} target="_blank">
                                     view the project
@@ -31,27 +32,27 @@ function SingleHero({ title, href, github, role, context, date, category }) {
                                     <PiGithubLogoFill /> look at the github
                                 </Button>
                             )}
-                        </Stack>
+                        </div>
                     )}
                 </Stack>
-                <Stack width="100%" justify="space-between">
+                <div className={styles.work_info_grid}>
                     {role &&
-                        <Stack width="33%" direction="column" spacing='0' align="center" className="uppercase">
+                        <div className={styles.work_info_item + " uppercase"}>
                             <Title level={3} className={"default step--2"}>Role:</Title><Text className={"step--1"}>{role}</Text>
-                        </Stack>}
+                        </div>}
                     {context &&
-                        <Stack width="33%" direction="column" spacing='0' align="center" className="uppercase">
+                        <div className={styles.work_info_item + " uppercase"}>
                             <Title level={3} className={"default step--2"}>Context:</Title><Text className={"step--1"}>{context}</Text>
-                        </Stack>}
+                        </div>}
                     {date &&
-                        <Stack width="33%" direction="column" spacing='0' align="center" className="uppercase">
+                        <div className={styles.work_info_item + " uppercase"}>
                             <Title level={3} className={"default step--2"}>Date:</Title><Text className={"step--1"}>{new Date(date).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: '2-digit',
                                 day: '2-digit'
                             }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3/$1/$2')}</Text>
-                        </Stack>}
-                </Stack>
+                        </div>}
+                </div>
             </Stack>
         </Section>
     );
