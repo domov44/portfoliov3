@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Section from '../../../ui/wrapper/Section';
 import styles from './SingleMainSection.module.css';
 
 
@@ -31,7 +30,7 @@ function SingleMainSection({ image }) {
     }, []);
 
     return (
-        <Section className="h80vh defaultPadding align_center" ref={sectionRef}>
+        <section className={styles.section} ref={sectionRef}>
             <figure className={styles.image_section}>
                 <img
                     className={styles.image_bg}
@@ -40,7 +39,7 @@ function SingleMainSection({ image }) {
                     alt={image.altText}
                 />
             </figure>
-        </Section>
+        </section>
     );
 }
 

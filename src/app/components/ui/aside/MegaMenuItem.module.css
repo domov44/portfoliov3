@@ -11,3 +11,9 @@
 .mega_menu_item:hover {
     color: var(--color-title);
 }
+
+@media (max-width: 768px) {
+    .mega_menu_item {
+        font-size: 12vw;
+    }
+}

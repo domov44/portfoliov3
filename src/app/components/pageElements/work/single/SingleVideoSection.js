@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Section from '../../../ui/wrapper/Section';
 import styles from './SingleVideoSection.module.css';
 
 function SingleVideoSection({ video }) {
@@ -29,7 +28,7 @@ function SingleVideoSection({ video }) {
     }, []);
 
     return (
-        <Section className="h100vh defaultPadding" ref={sectionRef}>
+        <section className={styles.section} ref={sectionRef}>
             <figure className={styles.image_section}>
                 <video
                     className={styles.image_bg}
@@ -38,7 +37,7 @@ function SingleVideoSection({ video }) {
                     autoPlay loop muted playsInline
                 />
             </figure>
-        </Section>
+        </section>
     );
 }
 

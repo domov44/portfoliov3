@@ -1,0 +1,54 @@
+.button_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.work_info_grid {
+    display: flex;
+    width: 100%;
+}
+
+.work_info_grid> :first-child {
+    text-align: left;
+}
+
+.work_info_grid> :nth-child(2) {
+    text-align: center;
+}
+
+.work_info_grid> :last-child {
+    text-align: right;
+}
+
+.work_info_item {
+    flex: 1 1;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+@media (max-width: 768px) {
+    .button_wrapper {
+        flex-direction: column;
+    }
+    .work_info_grid{
+        flex-direction: column;
+    }
+
+    .work_info_grid> :first-child {
+        text-align: left;
+    }
+
+    .work_info_grid> :nth-child(2) {
+        text-align: left;
+    }
+
+    .work_info_grid> :last-child {
+        text-align: left;
+    }
+}
