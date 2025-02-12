@@ -161,6 +161,16 @@ export async function getWorkBySlug(slug) {
             nodes {
               ... on Skill {
                 id
+                title
+                skillsLayers {
+                  nodes {
+                    name
+                     dataLayer {
+                      background
+                      color
+                    }
+                  }
+                }
                 skills {
                   colisionImage {
                     node {

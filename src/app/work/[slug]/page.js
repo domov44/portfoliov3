@@ -29,7 +29,16 @@ async function Page({ params }) {
             <SingleHero category={work.workCategories.nodes[0].name} title={work.title} href={work.works.projectLink.url} github={work.works.github_link && work.works.github_link.url} context={work.works.context} role={work.works.role} date={work.works.date} />
             {work.works.video.node.mediaItemUrl && <SingleVideoSection video={work.works.video.node.mediaItemUrl} />}
             <SingleDescription description={work.works.description} />
-            <MatterShapes heading={work.works.skillsSection[0].heading && work.works.skillsSection[0].heading} images={work.works?.skillsSection[0].skills.nodes.map(skill => skill.skills?.colisionImage?.node?.sourceUrl) || []} />
+            <MatterShapes
+                heading={work.works.skillsSection[0].heading && work.works.skillsSection[0].heading}
+                images={work.works?.skillsSection[0].skills.nodes.map(skill => ({
+                    url: skill.skills?.colisionImage?.node?.sourceUrl,
+                    label: skill?.title,
+                    layer: skill?.skillsLayers?.nodes[0]?.name,
+                    background: skill?.skillsLayers?.nodes[0]?.dataLayer?.background,
+                    color: skill?.skillsLayers?.nodes[0]?.dataLayer?.color
+                })) || []
+                } />
             {work.works.gallery && work.works.gallery.map((row, index) => {
                 switch (row.__typename) {
                     case "WorksGalleryOneLayout":
