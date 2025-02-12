@@ -52,7 +52,15 @@ export default function ComponentAdapter({ data, typename }) {
             return (
                 <MatterShapes
                     heading={data.heading}
-                    images={data.skillsLogo?.nodes?.map(skill => skill.skills?.colisionImage?.node?.sourceUrl) || []}
+                    images={
+                        data.skillsLogo?.nodes?.map(skill => ({
+                            url: skill.skills?.colisionImage?.node?.sourceUrl,
+                            label: skill?.title,
+                            layer: skill?.skillsLayers?.nodes[0]?.name,
+                            background: skill?.skillsLayers?.nodes[0]?.dataLayer?.background,
+                            color: skill?.skillsLayers?.nodes[0]?.dataLayer?.color
+                        })) || []
+                    }
                 />
             );
         case 'BlocksContentWorkHighlightLayout':

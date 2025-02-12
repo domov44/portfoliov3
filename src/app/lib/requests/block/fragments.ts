@@ -107,6 +107,16 @@ export const BLOCK_SECTION_SKILLS_COLISION = `
             nodes {
               ... on Skill {
                 id
+                title
+                skillsLayers {
+                  nodes {
+                    name
+                     dataLayer {
+                      background
+                      color
+                    }
+                  }
+                }
                 skills {
                   colisionImage {
                     node {
