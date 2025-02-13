@@ -35,7 +35,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'www.portfolio.nexus-corp.fr',
+        hostname: 'www.api.ronanscotet.com',
         port: '',
         pathname: '/wp-content/uploads/**',
       },
