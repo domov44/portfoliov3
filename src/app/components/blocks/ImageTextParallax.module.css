@@ -1,69 +1,158 @@
 .image_bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.6;
-    transform: translate3d(0px, -10%, 0px);
-    will-change: transform;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  transform: translate3d(0px, -10%, 0px);
+  will-change: transform;
+}
+
+.image_section {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 190vh;
+  overflow: hidden;
+  margin: 0;
+  background: black;
+  z-index: -1;
+}
+
+.bentoDiv {
+  position: relative;
+  overflow: hidden;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 22vw;
+  background: rgba(31, 29, 39, 0.24);
+  padding: 10% 10% 20%;
+  border-radius: 10px;
+  border: 1px solid rgb(56, 51, 63);
+  transform-origin: center;
+  backdrop-filter: blur(8px);
+  transform: translate3d(0px, 0px, 0px) rotate(0deg);
+}
+
+.bentoParentDiv {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  transform-origin: center;
+  transform: translate3d(-10px, 150px, 0px) rotate(10deg);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.bentoDiv a {
+  color: var(--secondary-bg-color);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.bentoDiv a::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  content: "";
+}
+
+.image_wrapper {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+.content_wrapper {
+  width: 40%;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  max-width: 65vw;
+}
+
+.container_row_reverse {
+  flex-direction: row-reverse;
+}
+
+.container_row {
+  flex-direction: row;
+}
+
+.global_wrapper {
+  padding: 50vh 0px 0px 0px;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 10vw;
+  display: flex;
+}
+
+.section {
+  max-width: 100%;
+  padding: 100px 0;
+  gap: 10px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+}
+
+.scroll_section {
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  height: 160vh;
+  justify-content: start;
+  padding: 0px 0px 70vh 0px;
+  gap: 100px;
+}
+
+@media (max-width: 768px) {
+  .scroll_section {
+    height: 100vh;
   }
-  
-  .image_section {
-    width: 100%;
-    border-radius: 15px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 190vh;
-    overflow: hidden;
-    margin: 0;
-    background: black;
-    z-index: -1;
+
+  .global_wrapper {
+    padding: 30vh 30px 0px 30px;
   }
-  
-  .bentoDiv {
-    position: relative;
-    overflow: hidden;
-    gap: 10px;
-    display: flex;
+
+  .container,
+  .container_row,
+  .container_row_reverse {
     flex-direction: column;
-    justify-content: center;
-    width: 22vw;
-    background: rgba(31, 29, 39, 0.24);
-    padding: 10% 10% 20%;
-    border-radius: 10px;
-    border: 1px solid rgb(56, 51, 63);
-    transform-origin: center;
-    backdrop-filter: blur(8px);
-    transform: translate3d(0px, 0px, 0px) rotate(0deg);
+    max-width: 100%;
   }
-  
-  .bentoParentDiv {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    transform-origin: center;
-    transform: translate3d(-10px, 150px, 0px) rotate(10deg);
-  }
-  
-  .video {
+
+  .content_wrapper,
+  .image_wrapper {
     width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    object-fit: cover;
   }
-  
-  .bentoDiv a {
-    color: var(--secondary-bg-color);
-    opacity: 0;
-    cursor: pointer;
+
+  .bentoDiv {
+    width: 50%;
+    padding: 5% 5% 10%;
   }
-  
-  .bentoDiv a::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    content: "";
-  }
+}

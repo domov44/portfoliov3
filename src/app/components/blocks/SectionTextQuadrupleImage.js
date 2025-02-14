@@ -73,7 +73,7 @@ const SectionTextQuadrupleImage = ({ heading, text, bento }) => {
     }, [bento]);
 
     return (
-        <Section fullWidth highlight>
+        <Section highlight>
             <Stack
                 ref={sectionRef}
                 className="scroll-section"
