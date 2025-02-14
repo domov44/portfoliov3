@@ -102,16 +102,16 @@ const ImageTextParallax = ({ backgroundImage, heading, button, image, link, text
 
     return (
 
-        <Section fullWidth>
-            <Stack width="100%" ref={sectionRef} className="scroll-section" position="relative" direction="column" overflow height="160vh" justify="start" padding="0px 0px 70vh 0px" spacing="100px">
-                <Stack padding="50vh 0px 0px 0px" direction="column" width="100%" align="center" spacing="10vw">
+        <section className={styles.section} ref={sectionRef}>
+            <div className={styles.scroll_section}>
+                <div className={styles.global_wrapper}>
                     <Stack width="100%" justify="center">
                         <Title level={2} className="colored font8vw text_align_center w70vw ln0_8">
                             {heading}
                         </Title>
                     </Stack>
-                    <Container direction={direction ? "row-reverse" : "row"} width={"full"} maxwidth={"xl"} align={"center"}>
-                        <Stack direction={"column"} width={"40%"} spacing={"20px"}>
+                    <div className={styles.container + ' ' + (direction ? styles.container_row_reverse : styles.container_row)}>
+                        <div className={styles.content_wrapper}>
                             <div className="flex directionColumn spacing_sm txt_group" dangerouslySetInnerHTML={{ __html: text }} />
                             {button && (
                                 <Button
@@ -124,11 +124,11 @@ const ImageTextParallax = ({ backgroundImage, heading, button, image, link, text
                                     {button.title}
                                 </Button>
                             )}
-                        </Stack>
-                        <Stack width={"60%"} justify={"center"}>
+                        </div>
+                        <div className={styles.image_wrapper}>
                             <div ref={parentBentoDivRef} className={styles.bentoParentDiv}>
                                 <figure ref={bentoDivRef} className={styles.bentoDiv}>
-                                    <img src={image.sourceUrl} alt={image.altText} className={styles.video} />
+                                    <img src={image.sourceUrl} alt={image.altText} className={styles.image} />
                                     < Stack >
                                         <Text>{link.title}</Text>
                                     </Stack>
@@ -137,14 +137,14 @@ const ImageTextParallax = ({ backgroundImage, heading, button, image, link, text
                                     )}
                                 </figure>
                             </div>
-                        </Stack>
-                    </Container>
-                </Stack>
+                        </div>
+                    </div>
+                </div>
                 <figure className={styles.image_section}>
                     <img className={styles.image_bg} ref={imageBgRef} src={backgroundImage.sourceUrl} alt={backgroundImage.altText} />
                 </figure>
-            </Stack>
-        </Section>
+            </div>
+        </section>
 
     );
 };
