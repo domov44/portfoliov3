@@ -5,13 +5,13 @@ import * as Matter from 'matter-js';
 import Title from '../ui/textual/Title';
 import styles from './Mattershapes.module.css';
 
-const MatterShapes = ({ images, heading }) => {
+const MatterShapes = ({ images, heading, layers }) => {
   const sceneRef = useRef(null);
 
   useEffect(() => {
-    if (!sceneRef.current || images.length === 0) return;
+    if (!sceneRef.current || (images.length === 0 && layers.length === 0)) return;
 
-    const { Engine, Render, Runner, MouseConstraint, Mouse, Composite, Bodies, Events } = Matter;
+    const { Engine, Render, Runner, MouseConstraint, Mouse, Composite, Bodies, Constraint, Events } = Matter;
 
     const engine = Engine.create();
     const world = engine.world;
@@ -46,9 +46,42 @@ const MatterShapes = ({ images, heading }) => {
 
     const isMobile = window.innerWidth <= 768;
     const pillHeight = isMobile ? 30 : 50;
-    const cols = isMobile ? 4 : 8;
-    const spacingX = isMobile ? 80 : 100;
-    const spacingY = isMobile ? 30 : 50;
+
+    const totalLayers = layers.length;
+    const layerSpacing = width / (totalLayers + 1);
+
+    const layerPills = layers.map((layer, index) => {
+      const textWidth = layer.label.length * (isMobile ? 10 : 15);
+      const pillWidth = textWidth + 40;
+      const x = (index + 1) * layerSpacing;
+      const y = 50;
+
+      const body = Bodies.rectangle(x, y, pillWidth, pillHeight, {
+        restitution: 0.6,
+        chamfer: { radius: pillHeight / 2 },
+        render: {
+          fillStyle: layer.background,
+        },
+      });
+
+      const constraint = Constraint.create({
+        bodyB: body,
+        pointA: { x, y },
+        stiffness: 0.01,
+        damping: 0.1,
+        render: { visible: false },
+      });
+
+      Composite.add(world, [body, constraint]);
+
+      return {
+        body,
+        label: layer.label,
+        color: layer.color,
+        pillWidth,
+        pillHeight,
+      };
+    });
 
     const preloadImages = images.map(({ url, label, background, color }) => {
       const img = new Image();
@@ -60,13 +93,17 @@ const MatterShapes = ({ images, heading }) => {
     const tempCtx = tempCanvas.getContext('2d');
     tempCtx.font = isMobile ? '18px ClashDisplay' : '25px ClashDisplay';
 
+    const cols = isMobile ? 4 : 8;
+    const spacingX = width / (cols + 1);
+    const spacingY = isMobile ? 30 : 50;
+
     const bodiesWithContent = preloadImages.map(({ img, label, background, color }, index) => {
       const textWidth = tempCtx.measureText(label).width;
       const imgSize = (pillHeight - 10) * 0.7;
       const padding = 30;
       const pillWidth = textWidth + imgSize + padding;
 
-      const x = (index % cols) * spacingX + pillWidth / 2 + 50;
+      const x = (index % cols) * spacingX + spacingX / 2;
       const y = 100 + Math.floor(index / cols) * spacingY;
 
       const body = Bodies.rectangle(x, y, pillWidth, pillHeight, {
@@ -133,6 +170,22 @@ const MatterShapes = ({ images, heading }) => {
 
         context.restore();
       });
+
+      layerPills.forEach(({ body, label, color }) => {
+        const { x, y } = body.position;
+        const angle = body.angle;
+
+        context.save();
+        context.translate(x, y);
+        context.rotate(angle);
+
+        context.fillStyle = color || '#FFFFFF';
+        context.font = isMobile ? '18px ClashDisplay' : '25px ClashDisplay';
+        context.textAlign = 'center';
+        context.fillText(label, 0, 5);
+
+        context.restore();
+      });
     });
 
     Render.lookAt(render, {
@@ -147,7 +200,7 @@ const MatterShapes = ({ images, heading }) => {
       render.canvas.remove();
       render.textures = {};
     };
-  }, [images]);
+  }, [images, layers]);
 
   return (
     <section className={styles.matter_section}>

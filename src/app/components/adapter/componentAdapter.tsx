@@ -49,8 +49,19 @@ export default function ComponentAdapter({ data, typename }) {
                 />
             );
         case 'BlocksContentMatterJsLayout':
+            const layers = Array.from(new Map(
+                data.skillsLogo?.nodes
+                    .flatMap(skill => skill.skillsLayers?.nodes || [])
+                    .map(layer => [layer.name, {
+                        label: layer.name,
+                        background: layer.dataLayer?.background || 'transparent',
+                        color: layer.dataLayer?.color || '#000'
+                    }])
+            ).values());
+
             return (
                 <MatterShapes
+                    layers={layers}
                     heading={data.heading}
                     images={
                         data.skillsLogo?.nodes?.map(skill => ({
@@ -63,6 +74,7 @@ export default function ComponentAdapter({ data, typename }) {
                     }
                 />
             );
+
         case 'BlocksContentWorkHighlightLayout':
             return (
                 <WorkGrid
