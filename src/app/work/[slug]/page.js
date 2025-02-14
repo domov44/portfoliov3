@@ -22,6 +22,16 @@ async function Page({ params }) {
         notFound();
     }
 
+    const layers = Array.from(new Map(
+        workData?.work?.works?.skillsSection[0].skills.nodes
+            .flatMap(skill => skill.skillsLayers?.nodes || [])
+            .map(layer => [layer.name, {
+                label: layer.name,
+                background: layer.dataLayer?.background || 'transparent',
+                color: layer.dataLayer?.color || '#000'
+            }])
+    ).values());
+
     const work = workData.work
 
     return (
@@ -30,6 +40,7 @@ async function Page({ params }) {
             {work.works.video.node.mediaItemUrl && <SingleVideoSection video={work.works.video.node.mediaItemUrl} />}
             <SingleDescription description={work.works.description} />
             <MatterShapes
+                layers={layers}
                 heading={work.works.skillsSection[0].heading && work.works.skillsSection[0].heading}
                 images={work.works?.skillsSection[0].skills.nodes.map(skill => ({
                     url: skill.skills?.colisionImage?.node?.sourceUrl,
