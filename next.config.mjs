@@ -1,14 +1,3 @@
-const wordpressUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
-
-if (!wordpressUrl || !URL.canParse(wordpressUrl)) {
-  throw new Error(`
-    Please provide a valid WordPress instance URL.
-    Add to your environment variables NEXT_PUBLIC_WORDPRESS_API_URL.
-  `);
-}
-
-const { protocol, hostname, port, pathname } = new URL(wordpressUrl);
-
 const nextConfig = {
   compiler: {
     styledComponents: true,
@@ -16,10 +5,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: protocol.slice(0, -1),
-        hostname,
-        port,
-        pathname: `${pathname}/**`,
+        protocol: 'https',
+        hostname: 'www.api.ronanscotet.com',
+        port: '',
+        pathname: '/wp-content/uploads/**',
       },
       {
         protocol: 'http',
@@ -33,18 +22,6 @@ const nextConfig = {
         port: '',
         pathname: '/avatar/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'www.api.ronanscotet.com',
-        port: '',
-        pathname: '/wp-content/uploads/**',
-      },
-      // {
-      //   protocol: 'http',
-      //   hostname: 'test-graphql-old.local',
-      //   port: '',
-      //   pathname: '/wp-content/uploads/**',
-      // },
     ],
   },
 };
