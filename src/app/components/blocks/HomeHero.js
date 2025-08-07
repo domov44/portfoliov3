@@ -7,7 +7,6 @@ import Hero from '../ui/wrapper/Hero';
 import { gsap } from 'gsap';
 import Stack from '../ui/wrapper/Stack';
 import TextLink from '../ui/textual/TextLink';
-import Image from 'next/image';
 import styles from './HomeHero.module.css';
 
 
@@ -39,13 +38,13 @@ const ImagesList = ({ images }) => {
                     key={index}
                     className={`image-container-${index} hidden`}
                 >
-                    <Image
+                    <img
                         className={styles.thumnailImage}
                         src={image.sourceUrl}
                         alt={image.alt}
                         width={250}
                         height={250}
-                    />
+                    ></img>
                 </ImageItem>
             ))}
         </ImageList>
