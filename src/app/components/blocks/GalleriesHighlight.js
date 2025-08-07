@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Title from '../ui/textual/Title';
 import Stack from '../ui/wrapper/Stack';
 import Section from '../ui/wrapper/Section';
@@ -91,7 +90,7 @@ const GalleriesHighlight = ({ gallery, background, link, heading, text }) => {
                                         style={{ opacity: index === 0 ? 1 : 0 }}
                                     >
                                         <picture className={styles.picture}>
-                                            <Image width={800} height={800} className={styles.image} src={src} alt={`Gallery ${index + 1}`} />
+                                            <img width={800} height={800} className={styles.image} src={src} alt={`Gallery ${index + 1}`}></img>
                                         </picture>
                                     </li>
                                 ))}
@@ -102,7 +101,7 @@ const GalleriesHighlight = ({ gallery, background, link, heading, text }) => {
                         </Stack>
                     </Stack>
                     <figure className={styles.image_section}>
-                        <Image width={3000} height={3000} className={styles.image_bg} ref={imageBgRef} src={background[0]?.sourceUrl || ''} alt="Background" />
+                        <img width={3000} height={3000} className={styles.image_bg} ref={imageBgRef} src={background[0]?.sourceUrl || ''} alt="Background"></img>
                     </figure>
                 </Stack>
             </Section>

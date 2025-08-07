@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import styles from './GalleriesGrid.module.css';
-import Image from 'next/image';
 
 const GalleriesGrid = ({ galleriesElements }) => {
     const [hoveredGallery, setHoveredGallery] = useState(null);
@@ -233,7 +232,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
                         className={styles.GalleryGridListItem}
                     >
                         <picture className={styles.GalleryPicture} ref={(el) => (pictureRefs.current[index] = el)}>
-                            <Image
+                            <img
                                 ref={(el) => (imgRefs.current[index] = el)}
                                 src={gallery.url}
                                 alt={gallery.alt || "Gallery Image"}
@@ -242,7 +241,7 @@ const GalleriesGrid = ({ galleriesElements }) => {
                                 height={800}
                                 loading="eager"
                                 priority={index < 5}
-                            />
+                            ></img>
                         </picture>
                     </li>
                 ))}
