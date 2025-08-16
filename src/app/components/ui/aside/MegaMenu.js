@@ -1,29 +1,28 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import TextLink from '../textual/TextLink';
-import Stack from '../wrapper/Stack';
-import MegaMenuItem from './MegaMenuItem';
-import styles from './MegaMenu.module.css';
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import TextLink from "../textual/TextLink";
+import Stack from "../wrapper/Stack";
+import MegaMenuItem from "./MegaMenuItem";
+import styles from "./MegaMenu.module.css";
 
-
-function MegaMenu({ isopen, toggleMenu, isAnimating, setIsAnimating }) {
+function MegaMenu({ isopen, toggleMenu, isAnimating, setIsAnimating, menuItems }) {
   const asideRef = useRef(null);
   const overlayRef = useRef(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
-    if (isopen === 'open') {
+    if (isopen === "open") {
       setMenuVisible(true);
 
       gsap.fromTo(
         asideRef.current,
-        { y: '-100%' },
+        { y: "-100%" },
         {
           delay: 0.6,
-          y: '20px',
+          y: "20px",
           duration: 1,
-          ease: 'power4.out',
+          ease: "power4.out",
           onComplete: () => setIsAnimating(false),
         }
       );
@@ -32,14 +31,14 @@ function MegaMenu({ isopen, toggleMenu, isAnimating, setIsAnimating }) {
         opacity: 1,
         delay: 0.6,
         duration: 0.6,
-        ease: 'power4.out',
-        visibility: 'visible',
+        ease: "power4.out",
+        visibility: "visible",
       });
     } else {
       gsap.to(asideRef.current, {
-        y: '-100%',
+        y: "-100%",
         duration: 0.6,
-        ease: 'power4.in',
+        ease: "power4.in",
         onComplete: () => {
           setMenuVisible(false);
           setIsAnimating(false);
@@ -49,53 +48,67 @@ function MegaMenu({ isopen, toggleMenu, isAnimating, setIsAnimating }) {
       gsap.to(overlayRef.current, {
         opacity: 0,
         duration: 0.6,
-        ease: 'power4.in',
+        ease: "power4.in",
         onComplete: () => {
-          overlayRef.current.style.visibility = 'hidden';
+          overlayRef.current.style.visibility = "hidden";
         },
       });
     }
   }, [isopen]);
 
   return (
-    <div style={{ display: menuVisible ? 'block' : 'none' }} className={styles.menu_root}>
+    <div
+      style={{ display: menuVisible ? "block" : "none" }}
+      className={styles.menu_root}
+    >
       <div
         ref={overlayRef}
         onClick={toggleMenu}
-        className={`${styles.aside_overlay} ${isopen === 'open' ? 'visible' : 'hidden'}`}
+        className={`${styles.aside_overlay} ${
+          isopen === "open" ? "visible" : "hidden"
+        }`}
       />
       <aside ref={asideRef} className={styles.aside_menu}>
         <div className={styles.aside_content}>
           <div className={styles.megamenu_wrapper}>
             <div className={styles.megamenu_asset}></div>
             <nav className={styles.megamenu_nav}>
-              <MegaMenuItem href={"/"} transition onClick={toggleMenu}>
-                Home
-              </MegaMenuItem>
-              <MegaMenuItem href={"/about-me"} transition onClick={toggleMenu}>
-                About
-              </MegaMenuItem>
-              <MegaMenuItem href={"/work"} transition onClick={toggleMenu}>
-                Work
-              </MegaMenuItem>
-              <MegaMenuItem href={"/gallery"} transition onClick={toggleMenu}>
-                Gallery
-              </MegaMenuItem>
+              {menuItems?.map(({ node }) => {
+  if (!node?.uri) return null;
+  return (
+    <MegaMenuItem
+      key={node.id}
+      href={node.uri}
+      transition
+      onClick={toggleMenu}
+    >
+      {node.label ?? "Sans titre"}
+    </MegaMenuItem>
+  );
+})}
+
             </nav>
           </div>
+
           <nav className={styles.menu_social}>
             <div className={styles.menu_social_item}>
-              <TextLink href={"https://github.com/domov44"} className="step-2">
+              <TextLink href="https://github.com/domov44" className="step-2">
                 github
               </TextLink>
             </div>
             <div className={styles.menu_social_item}>
-              <TextLink href={"https://www.linkedin.com/in/ronan-scotet-concepteur-web/"} className="step-2">
+              <TextLink
+                href="https://www.linkedin.com/in/ronan-scotet-concepteur-web/"
+                className="step-2"
+              >
                 linkedin
               </TextLink>
             </div>
             <div className={styles.menu_social_item}>
-              <TextLink href={"https://www.instagram.com/rscotet/profilecard/?igsh=MWtieXhsNGlkdTl4eA=="} className="step-2">
+              <TextLink
+                href="https://www.instagram.com/rscotet/profilecard/?igsh=MWtieXhsNGlkdTl4eA=="
+                className="step-2"
+              >
                 instagram
               </TextLink>
             </div>

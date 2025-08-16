@@ -4,6 +4,9 @@ import './styles/theme.css';
 import './styles/generique.css';
 import './fonts/fonts.css';
 import LayoutStructure from './layouts/LayoutStructure';
+import { getHeader } from './lib/requests/menu/queries';
+
+const headerData = await getHeader();
 
 export const metadata = {
   metadataBase: new URL('https://www.ronanscotet.com'),
@@ -26,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body data-theme="dark">
-        <LayoutStructure>
+        <LayoutStructure menuItems={headerData?.menuItems?.edges || []}>
           {children}
         </LayoutStructure>
       </body>
