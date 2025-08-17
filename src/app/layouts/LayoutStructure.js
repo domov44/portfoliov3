@@ -7,7 +7,7 @@ import Footer from '../components/ui/aside/Footer';
 
 const noFooterPaths = ['/gallery', '/work'];
 
-export default function LayoutStructure({ children, menuItems }) {
+export default function LayoutStructure({ children, menuItems, logo }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
     const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function LayoutStructure({ children, menuItems }) {
 
     return (
         <>
-            <Header toggleMenu={toggleMenu} isopen={menuOpen ? 'open' : 'close'} isAnimating={isAnimating} />
+            <Header toggleMenu={toggleMenu} isopen={menuOpen ? 'open' : 'close'} isAnimating={isAnimating} logo={logo} />
             <MegaMenu menuItems={menuItems} toggleMenu={toggleMenu} isopen={menuOpen ? 'open' : 'close'} isAnimating={isAnimating} setIsAnimating={setIsAnimating} />
             {children}
             {!noFooterPage && (

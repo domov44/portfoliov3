@@ -8,6 +8,14 @@ import { getHeader } from './lib/requests/menu/queries';
 
 const headerData = await getHeader();
 
+const logo =
+  headerData?.datamenu?.logo?.node
+    ? {
+        sourceUrl: headerData.datamenu.logo.node.sourceUrl || '',
+        altText: headerData.datamenu.logo.node.altText || '',
+      }
+    : null;
+
 export const metadata = {
   metadataBase: new URL('https://www.ronanscotet.com'),
   title: 'Ronan Scotet - devops developer and lead developer',
@@ -24,12 +32,14 @@ export const metadata = {
   },
 };
 
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body data-theme="dark">
-        <LayoutStructure menuItems={headerData?.menuItems?.edges || []}>
+        <LayoutStructure
+          menuItems={headerData?.menuItems?.edges || []}
+          logo={logo}
+        >
           {children}
         </LayoutStructure>
       </body>

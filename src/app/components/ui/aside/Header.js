@@ -8,7 +8,7 @@ import Logo from '../Logo';
 import InvisibleLink from '../button/InvisibleLink';
 import styles from './Header.module.css';
 
-function Header({ isopen, toggleMenu, isAnimating }) {
+function Header({ isopen, toggleMenu, isAnimating, logo }) {
     const buttonRef = useRef(null);
     const menuTextRef = useRef(null);
     const closeTextRef = useRef(null);
@@ -76,7 +76,7 @@ function Header({ isopen, toggleMenu, isAnimating }) {
             <div className={styles.header_wrapper}>
                 <div className={styles.header_logo}>
                     <InvisibleLink href={"/"} lineheight={"0"} transition>
-                        <Logo />
+                        <img src={logo.sourceUrl} alt={logo.altText} width="80"></img>
                     </InvisibleLink>
                 </div>
                 <div className={styles.header_menu}>
