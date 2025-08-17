@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-const DynamicHour = () => {
+const DynamicHour = ({ city }) => {
   const [time, setTime] = useState(null);
   const [showColon, setShowColon] = useState(true);
 
@@ -13,14 +13,10 @@ const DynamicHour = () => {
       setShowColon(prev => !prev);
     }, 1000);
 
-    return () => {
-      clearInterval(timer);
-    };
+    return () => clearInterval(timer);
   }, []);
 
-  if (!time) {
-    return null;
-  }
+  if (!time) return null;
 
   const formatTime = () => {
     const options = {
@@ -38,8 +34,8 @@ const DynamicHour = () => {
   const { hours, minutes, amPm } = formatTime();
 
   return (
-    <p className={"step--2"}>Nantes, {' '}
-      {hours.toLowerCase()}
+    <p className="step--2">
+      {city}, {hours.toLowerCase()}
       <span style={{ opacity: showColon ? 1 : 0 }}>:</span>
       {minutes.toLowerCase()} {amPm}
     </p>

@@ -13,6 +13,7 @@ const GET_HEADER_QUERY = `
     query GET_HEADER {
         menu(id: "header-menu", idType: LOCATION) {
             datamenu {
+            city
                 logo {
                     node {
                         altText
