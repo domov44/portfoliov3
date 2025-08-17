@@ -125,7 +125,7 @@
   width: 100%;
   overflow: hidden;
   height: 160vh;
-  justify-content: start;
+  justify-content: flex-start;
   padding: 0px 0px 70vh 0px;
   gap: 100px;
 }

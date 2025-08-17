@@ -16,12 +16,17 @@ const logo =
       }
     : null;
 
+const city =
+  headerData?.datamenu?.city
+    ? headerData.datamenu.city || ''
+    : null;
+
 export const metadata = {
   metadataBase: new URL('https://www.ronanscotet.com'),
-  title: 'Ronan Scotet - devops developer and lead developer',
+  title: 'Ronan Scotet - fullstack and devops developer',
   description: 'Hey im Ronan, come to see my portfolio made with love :D. I manage web applications from A to Z, throughout the devops cycle.',
   openGraph: {
-    title: 'Ronan Scotet - devops developer and lead developer',
+    title: 'Ronan Scotet - fullstack and devops developer',
     description: 'Hey im Ronan, come to see my portfolio made with love :D. I manage web applications from A to Z, throughout the devops cycle.',
     images: [
       {
@@ -39,6 +44,7 @@ export default function RootLayout({ children }) {
         <LayoutStructure
           menuItems={headerData?.menuItems?.edges || []}
           logo={logo}
+          city={city}
         >
           {children}
         </LayoutStructure>

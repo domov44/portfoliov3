@@ -1,14 +1,11 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import Container from '../wrapper/Container';
 import DynamicHour from '../../../utils/DynamicHour';
-import Stack from '../wrapper/Stack';
-import Logo from '../Logo';
 import InvisibleLink from '../button/InvisibleLink';
 import styles from './Header.module.css';
 
-function Header({ isopen, toggleMenu, isAnimating, logo }) {
+function Header({ isopen, toggleMenu, isAnimating, logo, city }) {
     const buttonRef = useRef(null);
     const menuTextRef = useRef(null);
     const closeTextRef = useRef(null);
@@ -97,7 +94,7 @@ function Header({ isopen, toggleMenu, isAnimating, logo }) {
                     </button>
                 </div>
                 <div className={styles.header_time}>
-                    <DynamicHour />
+                    <DynamicHour city={city} />
                 </div>
             </div>
         </header>
