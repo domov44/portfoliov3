@@ -240,7 +240,6 @@ const GalleriesGrid = ({ galleriesElements }) => {
                                 width={800}
                                 height={800}
                                 loading="eager"
-                                priority={index < 5}
                             ></img>
                         </picture>
                     </li>
