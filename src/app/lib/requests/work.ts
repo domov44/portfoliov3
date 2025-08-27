@@ -131,6 +131,17 @@ export async function getWorkBySlug(slug) {
     fragment WorkFields on Work {
       id
       title
+      seo {
+          title
+          metaDesc
+          fullHead
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
       workCategories {
       nodes {
         name
