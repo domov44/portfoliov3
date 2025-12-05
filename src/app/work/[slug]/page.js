@@ -18,7 +18,8 @@ async function getWorkCached(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
+
   const workData = await getWorkCached(slug);
   const work = workData?.work;
   if (!work) return {};
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }) {
       images: [
         {
           url: ogImage,
-          alt:  work.featuredImage?.altText || work.title,
+          alt: work.featuredImage?.altText || work.title,
         },
       ],
     },
@@ -58,7 +59,8 @@ export async function generateMetadata({ params }) {
 }
 
 async function Page({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
+
   const workData = await getWorkCached(slug);
 
   if (!workData || workData.work === null) {
